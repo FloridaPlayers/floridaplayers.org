@@ -1,0 +1,17 @@
+Thank you, {Name}, for your reservation of {TicketString} for our production of {ShowName} on {ShowDate}.  Your reservation has been successfully processed and saved. \r\n
+ 
+Please plan on arriving at least 15 minutes prior to the start of the show. If you arrive any later than 5 minutes before the show your tickets could be given away. Once at the {ShowLocation}, check with the house manager at the entrance, have your name crossed off the list, and enjoy the show! \r\n
+
+If you need to cancel or change your ticket reservation, please email publicist@floridaplayers.org\r\n
+If you need to change your reservation, please email the publicist AFTER you reserve your new tickets. Otherwise, a space for you cannot be guaranteed.\r\n 
+ 
+Make sure to check back at our Web site (www.floridaplayers.org) next semester for more information on our show schedule and events as well as to make your future ticket reservations.\r\n
+
+Thanks again for supporting our organization, the students that make it thrive, and the passion for the art that fuels us. \r\n
+\r\n
+Thank You, \r\n
+Alex Tanner\r\n
+Director of Publicity\r\n
+Florida Players - University of Florida \r\n
+publicist@floridaplayers.org\r\n
+www.floridaplayers.org\r\n

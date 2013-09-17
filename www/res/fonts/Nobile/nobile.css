@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'Nobile';
+    src: url('nobile.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'NobileBold';
+    src: url('nobile_bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal
+}
+
+@font-face {
+    font-family: 'NobileItalic';
+    src: url('nobile_italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'NobileBoldItalic';
+    src: url('nobile_bold_italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

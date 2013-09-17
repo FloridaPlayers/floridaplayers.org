@@ -1,0 +1,294 @@
+@import url('/res/fonts/Open Sans/opensans.css');
+@import url('/res/fonts/Cantarell/cantarell.css');
+@import url('/res/fonts/Nobile/nobile.css');
+@import url('/res/fonts/CartoGothic/cartogothic.css');
+@import url('/res/fonts/Aurulent Sans/aurulentsans.css');
+@import url('/res/fonts/Colaborate/colaborate.css');
+@import url('/res/fonts/NeoRetroDraw/neoretrodraw.css');
+@import url('/res/fonts/Quicksand/quicksand.css');
+@import url('/res/fonts/Walkway/walkway.css');
+@import url('/res/fonts/LeagueGothic/leaguegothic.css');
+
+html{
+	padding: 0;
+	margin: 0;
+}
+body{
+	background: #000000 top left repeat scroll url('/res/images/layout/brick-bg.png');
+	margin: 0;
+	padding: 0;
+	color: #6A6A6A;
+}
+div#container{
+	width: 900px;
+	height: 100%;
+	margin: 0 auto;
+}
+header{
+	padding: 10px 0 0 0;
+}
+header div#logo, header div#meta{
+	display: inline-block;
+}
+header div#logo img{
+	border: 0px solid #000;
+}
+header div#logo{
+	/*margin: 15px 0 10px;*/
+}
+header div#meta{
+	width: 217px;
+	height: 24px;
+	float: right;
+	position: relative;
+	bottom: 10px;
+	padding: 0px 34px 0;
+	text-align: right;
+	background: transparent top left no-repeat scroll url('/res/images/layout/metabar.png');
+	
+	font-family: OpenSansRegular, Arial;
+	font-size: 14px;
+	color: #848484;
+}
+header nav ul{
+	text-align: right;
+	margin: 0px;
+	padding: 0 20px;
+}
+header nav ul li{
+	display: inline-block;
+	list-style-type: none;
+	list-style-position: inside;
+	list-style-image: none;
+	background: #ffffff top left repeat scroll none;
+	padding: 5px 10px; 
+	font-family: OpenSansRegular, Arial;
+	font-size: 16px;
+	text-align: center; 
+	width: 80px;
+	
+	-moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 0 -2px 2px -2px rgba(0, 0, 0, 0.5) inset;
+	-webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 0 -2px 2px -2px rgba(0, 0, 0, 0.5) inset;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 0 -2px 2px -2px rgba(0, 0, 0, 0.5) inset;
+
+	border-collapse: separate;
+}
+header nav ul li a, header nav ul li.selected:hover a, header nav ul li.selected a:hover{
+	color: #848484;
+	text-decoration: none;
+}
+header nav ul li:hover a, header nav ul li a:hover{
+	color: #486ad6;
+	text-decoration: none;
+}
+header nav ul li.selected{
+	position: relative;
+	z-index: 5;
+	box-shadow: 0px 0px 2px rgba(000, 000, 000, 0.50);
+	-moz-box-shadow: 0px 0px 2px rgba(000, 000, 000, 0.50);
+	-webkit-box-shadow: 0px 0px 2px rgba(000, 000, 000, 0.50) !important;
+	border-collapse: separate;
+}
+div#body{
+	width: 100%;
+	height: auto;
+	background: #ffffff top left repeat scroll none;
+	-moz-box-shadow: 0px 0px 2px rgba(000, 000, 000, 0.50);
+	-webkit-box-shadow: 0px 0px 2px rgba(000, 000, 000, 0.50);
+	box-shadow: 0px 0px 2px rgba(000, 000, 000, 0.50);
+	border-collapse: separate;
+	font-family: OpenSansRegular;
+	margin: 0 0 50px 0;
+	padding: 0 0 20px 0; /*compliment <article>'s padding*/
+	/*position: relative;
+	z-index: 100;*/
+}
+div#body div#bodytop{
+	position: relative;
+	z-index: 5;
+	height: 5px;
+	background-color: #ffffff;
+	padding: 0 0 5px;
+}
+div#pagetop{
+	width: 100%;
+	height: 5px;
+	background-color: #ffffff;
+	box-shadow: 0px 0px 2px rgba(000, 000, 000, 0.50);
+	-moz-box-shadow: 0px 0px 2px rgba(000, 000, 000, 0.50);
+	-webkit-box-shadow: 0px 0px 2px rgba(000, 000, 000, 0.50);
+	border-collapse: separate;
+}
+#imagebar{
+	width: 900px;
+	height: 300px;
+	background-color: #aaa;
+}
+article{
+	padding: 20px 20px 0 20px; /* div#body adds the bottom padding */
+}
+section{
+	vertical-align: top;
+	padding: 0 10px;
+	display: block;
+}
+aside section{
+	padding: 0 !important;
+	margin: 0 0 15px;
+}
+section.nopad{
+	padding: 0 0;
+}
+section.half{
+	display: inline-block;
+	width: 49%;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	/* padding: 0 10px 0 0; */
+}
+section h2{
+	color: #4764FA;
+    font-family: AurulentSansRegular;
+    font-size: 24px;
+    font-weight: normal;
+    margin: 0;
+}
+section p{
+	color: #6A6A6A;
+    font-family: OpenSansRegular;
+    font-size: 14px;
+}
+#imagebar img{
+	/*display: inline-block;*/
+}
+img.1w{
+	width: 150px;
+}
+#imagebar img.1h{
+	height: 150px;
+}
+#imagebar img.2w{
+	width: 300px;
+}
+#imagebar img.2h{
+	height: 300px;
+}
+#slideshow .textslide{
+	background: transparent top left no-repeat scroll url('/res/images/layout/slideshow-text-background3.png');
+	color: #ffffff;
+	font-family: OpenSansRegular;
+	padding: 20px 100px 0;
+	width: 700px;
+}
+#slideshow h1{
+	font-family: QuicksandBook;
+	font-weight: normal;
+	margin: 0;
+	font-size: 40px;
+	text-shadow: 2px 2px 3px rgba(0,0,0,0.75);
+}
+section.inputline{
+	width: 100%;
+	color: #6A6A6A;
+    font-family: AurulentSansRegular;
+    font-size: 15px;
+    font-weight: normal;
+	padding: 10px 0 5px 0;
+}
+section.inputline input{
+	border: 2px solid #6A6A6A;
+	float: right;
+	font-family: AurulentSansRegular;
+	font-size: 14px;
+	margin: -5px 0 0;
+	padding: 3px;
+	width: 200px;
+}
+input.submitbutton{
+	border: 2px solid #6A6A6A;
+	font-family: AurulentSansRegular;
+	font-size: 14px;
+	width: 100%;
+	margin: 5px 0;
+	background-color: transparent;
+	color: #6A6A6A;
+	padding: 5px;
+	cursor: pointer;
+}
+input.submitbutton:hover{
+	border: 2px solid #505050;
+	color: #505050;
+}
+section.error{
+	border: 2px solid #FF0000;
+	font-family: AurulentSansRegular;
+	font-size: 14px;
+	width: 100%;
+	margin: 5px 0;
+	background-color: transparent;
+	color: #FF0000;
+	padding: 5px;
+}
+#meta a{
+	color: #4764FA;
+	text-decoration: none;
+}
+#meta a:hover{
+	text-decoration: underline;
+}
+.clear{
+	clear: both;
+}
+div#body > aside{
+	width: 240px;
+	float: right;
+	padding: 10px 20px 0 0;
+}
+div#body > aside.small{
+	width: 120px;
+}
+div#body > aside ul{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+div#body > aside ~ article{
+	width: 600px;
+	float: left;
+}
+div#body > aside.small ~ article{
+	width: 720px;
+	float: left;
+}
+*:not(.textslide) > h1{
+	background: url("/res/images/layout/header-bg2.png") no-repeat scroll left bottom transparent;
+	color: #FFFFFF !important;
+	font-family: QuicksandBook !important;
+	font-size: 36px !important;
+	font-weight: normal;
+	margin: 0;
+	padding: 20px 0 23px 20px;
+	text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+}
+div#body a{
+	color: #4764FA;
+	text-decoration: none;
+}
+div#body a:hover, div#body a:focus{
+	text-decoration: underline;
+}
+aside h3 {
+	background: url("/res/images/layout/aside-header-bg.png") no-repeat scroll 0 0 transparent;
+	color: #FFFFFF;
+	font-family: AurulentSansRegular;
+	font-size: 18px;
+	font-weight: normal;
+	height: 35px;
+	line-height: 35px;
+	margin: 0 auto;
+	padding: 0 0 0 20px;
+}
+aside h3 a{
+	color: inherit !important;
+}

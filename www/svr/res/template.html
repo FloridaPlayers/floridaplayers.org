@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{Title}</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="icon" href="/favicon.ico" type="image/ico" />
+		<link rel="stylesheet" type="text/css" href="/res/styles/main.css" />
+		<!--[if lte IE 9]> <link rel="stylesheet" type="text/css" href="/res/styles/ie-tweaks.css" /><![endif]-->
+		{HeadResources}
+	</head>
+	<body>
+		<div id="pagetop"></div>
+		<div id="container">
+			<header>
+				<div id="logo">
+					<a href="../" title="Florida Players">
+						<img src="/res/images/layout/logo.png" alt="Florida Players logo" />
+					</a>
+				</div>
+				<div id="meta">
+					{MetaMessage}
+				</div>
+				{Navigation}
+				<!--<nav>
+					<ul>
+						<li class="selected"><a href="/" title="Home">Home</a></li>
+						<li><a href="#" title="About Us">About Us</a></li>
+						<li><a href="#" title="Tickets">Tickets</a></li>
+						<li><a href="#" title="Media">Media</a></li>
+						<li><a href="#" title="Info">Info</a></li>
+					</ul>
+				</nav>-->
+			</header>
+			<div id="body">
+				<div id="bodytop"></div>
+				{Content}
+			</div>
+		</div>
+		{Trackers}
+	</body>
+</html>
