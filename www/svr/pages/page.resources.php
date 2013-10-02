@@ -30,7 +30,7 @@ class Page{
 				font-size: 15px;
 				font-weight: normal;
 				margin: 5px 0 0;
-				padding: 7px 0 2px 35px;
+				padding: 12px 0 2px 35px;
 			}
 			.resourceList li:first-of-type{
 				border-top: 0px solid #fff;
