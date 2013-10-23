@@ -101,7 +101,7 @@ class Page{
 				<ul class='resourceList'>
 				<?php
 				$dir = '';
-				$query = 'SELECT * FROM resources WHERE type=\'link\' ORDER BY dir,modified';
+				$query = 'SELECT * FROM resources WHERE type=\'link\' ORDER BY dir,modified DESC';
 				foreach($this->sql->query($query) as $row){
 					$type = $row['icon'];
 					if($type == 'none'){ $type = 'link'; }
@@ -126,7 +126,7 @@ class Page{
 				<ul class='resourceList'>
 				<?php
 				$dir = '';
-				$query = 'SELECT * FROM resources WHERE type=\'file\' ORDER BY dir,modified';
+				$query = 'SELECT * FROM resources WHERE type=\'file\' ORDER BY dir,modified DESC';
 				foreach($this->sql->query($query) as $row){
 					if($row['dir'] != $dir){
 						$dir = $row['dir'];
