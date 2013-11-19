@@ -152,7 +152,7 @@ class Page{
 					$(obj).height(objHeight);
 				});
 				$('#phillips_link').click(function(){ showPhillips(); return false; });
-				$('#nadine_link').click(function(){ showNadine(); return false; });
+				$('#mcguire_link').click(function(){ showNadine(); return false; });
 			});
 
 		</script>
@@ -180,12 +180,13 @@ class Page{
 
 	//Return nothing; print out the page. 
 	function getContent(){
+		global $THEATER_LOCATIONS;
 		?>
 		<h1>Map and Locations</h1>
 		<aside class="small">
 			<ul>
-				<li><a href="/map/squitieri" class="blocklink" id="phillips_link" title="Phillips Center location"><span>Phillips Center</span></a></li>
-				<li><a href="/map/nadine" class="blocklink" id="nadine_link" title="Nadine McGuire Theatre location"><span>Nadine McGuire</span></a></li>
+				<li><a href="/map/<?php echo $THEATER_LOCATIONS['1']['short']; ?>" class="blocklink" id="phillips_link" title="Phillips Center location"><span>Phillips Center</span></a></li>
+				<li><a href="/map/<?php echo $THEATER_LOCATIONS['2']['short']; ?>" class="blocklink" id="mcguire_link" title="McGuire Pavilion Black Box location"><span>McGuire Pavilion</span></a></li>
 			</ul>
 		</aside>
 		<article>
