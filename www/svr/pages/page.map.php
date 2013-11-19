@@ -125,8 +125,9 @@ class Page{
 				<?php
 				if($this->has_input_at(0)){
 					$requested_location = strtolower($this->get_input_at(0));
-					if($requested_location == "squitieri") echo "showPhillips();";
-					elseif($requested_location == "nadine") echo "showNadine();";
+					global $THEATER_LOCATIONS;
+					if($requested_location == $THEATER_LOCATIONS['1']['short']) echo "showPhillips();";
+					elseif($requested_location == $THEATER_LOCATIONS['2']['short']) echo "showNadine();";
 				}
 				?>
 			}
