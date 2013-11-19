@@ -13,7 +13,9 @@ class Page{
 	}
 
 	//Page specific content for the <head> section.
-	function customHead(){?>
+	function customHead(){
+		global $THEATER_LOCATIONS;
+		?>
 		<script src="/res/scripts/jquery.min.js" type="text/javascript"></script>
 		<script charset="UTF-8" type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
 		<style type="text/css">
@@ -87,8 +89,8 @@ class Page{
 				var nadinepin = new Microsoft.Maps.Pushpin(locationa, {text: '2'}); 
 				
 				nadineInfobox = new Microsoft.Maps.Infobox(nadinepin.getLocation(), 
-					{title: 'Nadine McGuire Theatre and Dance Pavillion', 
-					 description: 'The Nadine McGuire Theatre and Dance Pavillion is home to the Constans Theatre mainstage, the black box, as well as several other studios.', 
+					{title: 'McGuire Theatre and Dance Pavillion', 
+					 description: 'The McGuire Theatre and Dance Pavillion is home to the Constans Theatre mainstage, the Black Box, as well as several other studios.', 
 					 visible: false, 
 					 width: 350,
 					 offset: new Microsoft.Maps.Point(0,25)});
