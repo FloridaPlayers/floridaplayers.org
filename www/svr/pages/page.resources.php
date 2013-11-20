@@ -30,7 +30,7 @@ class Page{
 				font-size: 15px;
 				font-weight: normal;
 				margin: 5px 0 0;
-				padding: 7px 0 2px 35px;
+				padding: 12px 0 2px 35px;
 			}
 			.resourceList li:first-of-type{
 				border-top: 0px solid #fff;
@@ -101,7 +101,7 @@ class Page{
 				<ul class='resourceList'>
 				<?php
 				$dir = '';
-				$query = 'SELECT * FROM resources WHERE type=\'link\' ORDER BY dir,modified';
+				$query = 'SELECT * FROM resources WHERE type=\'link\' ORDER BY dir,modified DESC';
 				foreach($this->sql->query($query) as $row){
 					$type = $row['icon'];
 					if($type == 'none'){ $type = 'link'; }
@@ -126,7 +126,7 @@ class Page{
 				<ul class='resourceList'>
 				<?php
 				$dir = '';
-				$query = 'SELECT * FROM resources WHERE type=\'file\' ORDER BY dir,modified';
+				$query = 'SELECT * FROM resources WHERE type=\'file\' ORDER BY dir,modified DESC';
 				foreach($this->sql->query($query) as $row){
 					if($row['dir'] != $dir){
 						$dir = $row['dir'];
