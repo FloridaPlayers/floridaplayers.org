@@ -193,8 +193,58 @@ class Page{
 					display: block;
 					font-weight: bold;
 				}
-					
+				
+				#eventsList .noEvents{
+					display: none;
+				}
+				#eventsList .loadingEvents{
+					height: 60px;
+					text-align: center;
+				}
+				#eventsList .loadingEvents .loading{
+					margin: 10px auto 0;
+					width: 30px;
+				}
 			</style>
+			<script type='text/javascript'>
+				$(document).ready(function(){
+					eventsList = $('#eventsList');
+					$.ajax('getevents',{
+						cache: false,
+						success: function(data, status, jqXHR){
+							events = data.events;
+							
+							if(events != null && events.length > 0){
+								eventsList.empty();
+								
+								var tempLi;
+								//for(var event in events){
+								$.each(events, function(key,event){
+									tempLi = $('<li></li>');
+									eventTitle = $('<a></a>').addClass('eventTitle').html(event.name).attr('href',event.url);
+									tempLi.append(eventTitle);
+									eventTime = $('<span></span>').addClass('eventTime').html(event.time);
+									tempLi.append(eventTime);
+									eventLocation = $('<span></span>').addClass('eventLocation').html(event.location);
+									tempLi.append(eventLocation);
+									
+									eventsList.append(tempLi);
+								});
+							}
+							else{
+								$('.loadingEvents',eventsList).remove();
+								$('.noEvents',eventsList).show();
+							}
+						},
+						error: function(data, status, jqXHR){
+							$('.loadingEvents',eventsList).remove();
+							$('.noEvents',eventsList).show();
+						}
+					});
+								
+				});
+			</script>
+			<link href="/res/styles/loading-30.css" type="text/css" rel="stylesheet" />
 	<?php
 	}
 	
@@ -256,14 +306,28 @@ class Page{
 						<section id="upcomingEvents">
 							<h3>Upcoming events</h3>
 							<ul id="eventsList">
-								<?php //
-								displayFeed("http://www.google.com/calendar/feeds/webmaster%40floridaplayers.org/", //the base feed address for the calendar
-								false, //true/false (true: all events future events, false: just the next four weeks)
-								'<li class="noEvents">No upcoming events at this time.  See <a href="/calendar">the calendar</a> for future happenings.</li>', //text to display when there are no upcoming events
-								'<li class="eventError">We\'re Sorry.  The calendar is unavailable. Please try again later.</li>', //Error Text
-								4 //Maximum number of events to show; 0 is all
-								);
-								?>
+								<li class="noEvents">No upcoming events at this time.  See <a href="/calendar">the calendar</a> for future happenings.</li>
+								<li class="loadingEvents">
+									<span>Loading events...</span>
+									<div class="loading windows8">
+										<div class="wBall" id="wBall_1">
+											<div class="wInnerBall"></div>
+										</div>
+										<div class="wBall" id="wBall_2">
+											<div class="wInnerBall"></div>
+										</div>
+										<div class="wBall" id="wBall_3">
+											<div class="wInnerBall"></div>
+										</div>
+										<div class="wBall" id="wBall_4">
+											<div class="wInnerBall"></div>
+										</div>
+										<div class="wBall" id="wBall_5">
+											<div class="wInnerBall"></div>
+										</div>
+									</div>
+									
+								</li>
 							</ul>
 						</section>
 						<!--<section>

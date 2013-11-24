@@ -87,4 +87,6 @@ define('MESSAGE_TICKET_CONFIRM_HTML','./svr/res/messages/ticketConfirmation.html
 
 define('MESSAGE_MEMBERSHIP_CONFIRM_TEXT','./svr/res/messages/membershipConfirmation.txt');
 define('MESSAGE_MEMBERSHIP_CONFIRM_HTML','./svr/res/messages/membershipConfirmation.html.txt');
+
+define('SERVER_INI_FILE',SERVER_RES_DIR.'fpconfig.ini');
 ?>

@@ -101,7 +101,7 @@ class User{
 		else{
 			$userID = $_SESSION['USER_ID'];
 				
-			$infoQuery = "SELECT session FROM users WHERE uid='{$userID}' LIMIT 1;";
+			/*$infoQuery = "SELECT session FROM users WHERE uid='{$userID}' LIMIT 1;";
 			$infoQueryResponse = mysql_query($infoQuery,$this->sqlCon);
 			if(!$infoQueryResponse) {
 				logError($_SERVER['SCRIPT_NAME'],__LINE__,"Could not check user session! Query: \"$infoQuery\"",mysql_error(),time(),false);
@@ -127,7 +127,8 @@ class User{
 			}
 			else{
 				return false;
-			}
+			}*/
+			return true; //Basically, if we have a session, we're logged in. 
 		}
 	}
 	function get_user_info($info){
