@@ -48,9 +48,9 @@ class Page{
 		<h1>Points</h1>
 		<article>
 			<section>
-				<iframe frameborder="1" marginwidth="0" marginheight="0" border="0" style="border:0;margin:0;width:800px;height:600px;" src="https://spreadsheets.google.com/pub?key=0Aqv87wQ26byedDd2RzV4bUZzVFI5cFJzci1Bb0FyZ3c&hl=en&output=html" scrolling="yes" allowtransparency="true"></iframe>
+				<iframe frameborder="1" marginwidth="0" marginheight="0" border="0" style="border:0;margin:0;width:800px;height:600px;" src="https://docs.google.com/spreadsheet/pub?key=0Aqv87wQ26byedER3cHRsTEZwcnh6NmZDb1ZNYVMwN0E&gid=1" scrolling="yes" allowtransparency="true"></iframe>
 			</section>
-			<a href="http://spreadsheets.google.com/pub?key=0Aqv87wQ26byedDd2RzV4bUZzVFI5cFJzci1Bb0FyZ3c&amp;output=html" target="_blank">Open Points Table in New Window</a></div></td>
+			<a href="http://spreadsheets.google.com/pub?key=0Aqv87wQ26byedER3cHRsTEZwcnh6NmZDb1ZNYVMwN0E&amp;output=html&amp;gid=1" target="_blank">Open Points Table in New Window</a></div></td>
 		</article>
 		<?php
 	}
