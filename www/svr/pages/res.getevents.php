@@ -29,7 +29,7 @@ if($user){
 				$time = date('l, F jS \a\t g:ia',$eventTime);
 				if(isset($event['end_time'])){
 					$endTime = strtotime($event['end_time']);
-					if(date('l',$eventTime) != date('1',$endTime)){
+					if(date('l',$eventTime) != date('l',$endTime)){
 						$time .= ' to ' . date('l \a\t g:ia',strtotime($event['end_time']));
 					}
 					else{
