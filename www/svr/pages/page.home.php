@@ -186,7 +186,7 @@ class Page{
 					font-size: 13px;
 				}
 				#eventsList .eventTime{
-					font-size: 11px;
+					font-size: 10.5px;
 					display: block; 
 				}
 				#eventsList .eventTitle{
@@ -221,7 +221,7 @@ class Page{
 								//for(var event in events){
 								$.each(events, function(key,event){
 									tempLi = $('<li></li>');
-									eventTitle = $('<a></a>').addClass('eventTitle').html(event.name).attr('href',event.url);
+									eventTitle = $('<a></a>').addClass('eventTitle').html(event.name).attr({'href':event.url,'target':'_blank'});
 									tempLi.append(eventTitle);
 									eventTime = $('<span></span>').addClass('eventTime').html(event.time);
 									tempLi.append(eventTime);

@@ -5,6 +5,10 @@ class Page{
 	var $request = null;
 	var $sql = null;
 	var $usr;
+	
+	private $facebook;
+	private $conf;
+	
 	function Page($request){
 		$this->request = $request;
 		$this->usr = $GLOBALS['USER']; //Get the user from router.php
@@ -36,24 +40,28 @@ class Page{
 			return false;
 		}
 		
+		set_time_limit(15);
+		
+		$this->conf = parse_ini_file(SERVER_INI_FILE,true);
+		
+		$this->facebook = new Facebook(array(
+			'appId'  => $this->conf['facebook']['appid'],
+			'secret' => $this->conf['facebook']['secret']
+		));
+		
 		if(isset($_GET['code'])){
-			$conf = parse_ini_file(SERVER_INI_FILE,true);
-
-			//initializing keys
-			$facebook = new Facebook(array(
-				'appId'  => $conf['facebook']['appid'],
-				'secret' => $conf['facebook']['secret']
-			));
-			
-			/*$user = $facebook->getUser();
-			if($user){*/
-			
-				$conf['facebook']['access_code'] = $facebook->getAccessToken();
-				
-				//echo 'accessToken = ' . $facebook->getAccessToken();
-				
-				$this->write_php_ini($conf,SERVER_INI_FILE);
-			//}
+			$this->facebook->setExtendedAccessToken();
+			$this->writeNewAccessCode();
+		}
+		
+		if(isset($this->conf['facebook']['access_code'])){
+			//echo 'token: ' . $this->conf['facebook']['access_code'];
+			$this->facebook->setAccessToken($this->conf['facebook']['access_code']);
+			$this->facebook->setExtendedAccessToken();
+		}
+		
+		if($this->facebook->getUser() !== 0 && !isset($this->conf['facebook']['access_code'])){
+			$this->writeNewAccessCode();
 		}
 		
 		return true;
@@ -71,52 +79,58 @@ class Page{
 
 	//Return nothing; print out the page. 
 	function getContent(){
-		$conf = parse_ini_file(SERVER_INI_FILE,true);
-
-		//initializing keys
-		$facebook = new Facebook(array(
-			'appId'  => $conf['facebook']['appid'],
-			'secret' => $conf['facebook']['secret']
-		));
-		
-		if(isset($conf['facebook']['access_code'])){
-			//echo 'token: ' . $conf['facebook']['access_code'];
-			$facebook->setAccessToken($conf['facebook']['access_code']);
-			$facebook->setExtendedAccessToken();
-		}
-		
-		$user = $facebook->getUser();
-		if($user){
-			 try {
-
-				$user_profile = $facebook->api('/152160421492556/events','GET');
-				//echo "Name: " . $user_profile['name'];
-				print_r($user_profile);
-
-			} catch(FacebookApiException $e) {
-				// If the user is logged out, you can have a 
-				// user ID even though the access token is invalid.
-				// In this case, we'll get an exception, so we'll
-				// just ask the user to login again here.
-				$login_url = $facebook->getLoginUrl(); 
-				echo 'Please <a href="' . $login_url . '">login.</a>';
-			}   
-		}
-		else{
-			$login_url = $facebook->getLoginUrl();
-			echo 'Please <a href="' . $login_url . '">login.</a>';
-		}
-		// if($facebook->getSession()) {
-			// $user = $facebook->getUser();
-		// }
-		// else{
-			// $loginUrl = "https://graph.facebook.com/oauth/authorize?type=user_agent,offline_access&display=page&client_id={$conf['facebook']['appid']}&redirect_uri=http://apps.facebook.com/CANVAS URL/
-			// &scope=user_photos";
-			// echo '<a href="' . $loginUrl . '">Log in to Facebook</a>';
-		// }
+		if($this->requiresReauthorization()){ ?>
+			Please <a href="<?php echo $this->getReauthorizationUrl(); ?>">log in</a>.
+		<?php } else { ?>
+			<?php
+			$data = $this->getMyInfo();
+			if($data === false){ ?>
+				Please <a href="<?php echo $this->getReauthorizationUrl(); ?>">log in</a>.
+			<?php }
+			else{
+				echo 'Authorized by ' . $data['name'] . '<br />';
+				echo '<a href="'.$this->getLogoutUrl().'">Log out</a>';
+			}
+			?>
+		<?php }
 	}
 	
-	function write_php_ini($array, $file){
+	function writeNewAccessCode(){
+		$this->conf['facebook']['access_code'] = $this->facebook->getAccessToken();
+		$this->writePhpIni($this->conf,SERVER_INI_FILE);
+	}
+	
+	function requiresReauthorization(){
+		if($this->facebook->getUser() == false){
+			return true;
+		}
+		return false;
+	}
+	
+	function getReauthorizationUrl(){
+		return $this->facebook->getLoginUrl();
+	}
+	
+	function getLogoutUrl(){
+		return $this->facebook->getLogoutUrl();
+	}
+	
+	function getMyInfo(){
+		try {
+			$user_profile = $this->facebook->api('/me','GET');
+			//echo "Name: " . $user_profile['name'];
+			return $user_profile;
+
+		} catch(FacebookApiException $e) {
+			// If the user is logged out, you can have a 
+			// user ID even though the access token is invalid.
+			// In this case, we'll get an exception, so we'll
+			// just ask the user to login again here.
+			return false;
+		}   
+	}
+	
+	function writePhpIni($array, $file){
 		$res = array();
 		foreach($array as $key => $val){
 			if(is_array($val))
@@ -126,9 +140,9 @@ class Page{
 			}
 			else $res[] = "$key = ".(is_numeric($val) ? $val : '"'.$val.'"');
 		}
-		$this->safefilerewrite($file, implode("\r\n", $res));
+		$this->safeFileRewrite($file, implode("\r\n", $res));
 	}
-	function safefilerewrite($fileName, $dataToSave){    
+	function safeFileRewrite($fileName, $dataToSave){    
 		if ($fp = fopen($fileName, 'w')){
 			$startTime = microtime();
 			do{            

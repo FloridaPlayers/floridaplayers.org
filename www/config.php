@@ -3,6 +3,7 @@ require_once 'serverconfig.php';
 
 define('SERVER_RES_DIR','./svr/res/');
 define('SERVER_PAGE_DIR','./svr/pages/');
+define('SERVER_CACHE_DIR','./svr/cache/');
 define('TEMPLATE_FILE',SERVER_RES_DIR.'template.html');
 
 define('IMAGE_UPLOAD_DIR','./res/uploads/'); //Relative to "./do/upload.php"
