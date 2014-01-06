@@ -275,9 +275,9 @@ class Page{
 						<div class="slider-wrapper theme-default">
 							<div id="slider" class="nivoSlider">
 								<!-- <a href="http://floridaplayers.org/tickets"><img src="/res/images/header/altruists.png" alt=""/></a> -->
-								<a href="http://floridaplayers.org/show/mercy-seat"><img src="/res/images/header/banner_mercyseat.jpg" alt=""/></a>
-								<a href="http://floridaplayers.org/show/seminar"><img src="/res/images/header/banner_seminar.jpg" alt=""/></a>
-								<a href="http://floridaplayers.org/show/nwf-f13"><img src="/res/images/header/banner_newworks_f13.png" alt=""/></a>
+								<a href="http://floridaplayers.org/show/mercy-seat"><img src="/res/images/header/chatroom-header.png" alt="Chatroom"/></a>
+								<a href="http://floridaplayers.org/show/seminar"><img src="/res/images/header/antigone-header.png" alt="Antigone"/></a>
+								<a href="http://floridaplayers.org/show/nwf-f13"><img src="/res/images/header/spring-awakening-header.png" alt="Spring Awakening"/></a>
 								<a href="http://floridaplayers.org/show/jeffrey"><img src="/res/images/header/jeffrey.png" alt=""/></a>
 								<a href="http://floridaplayers.org/show/picasso"><img src="/res/images/header/picasso.png" alt="" /></a>
 								<a href="http://floridaplayers.org/show/iceland"><img src="/res/images/header/iceland.png" alt="" /></a>
