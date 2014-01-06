@@ -162,7 +162,7 @@ class Page{
 			}
 			$past_show_query = "SELECT show_id,show_name,show_abbr,show_term,show_year,byline,location,image FROM shows";
 			if($helper_query != "") $past_show_query .= " WHERE $helper_query";
-			$past_show_query .= ";";
+			$past_show_query .= "ORDER BY show_year DESC, show_term ASC;";
 			$past_show_response = mysql_query($past_show_query,$this->sql);
 			if(mysql_num_rows($past_show_response) > 0){ ?>
 				<section class="full nopad">
