@@ -36,6 +36,9 @@ function debug($message){
 	//echo $message . "<br />";
 }
 
+function orderMyEvents($a, $b) {
+	return $a['timestamp'] - $b['timestamp'];
+}
 
 
 //initializing keys
@@ -166,6 +169,7 @@ if($user){
 					$tempEvent['location'] = $event['location'];
 				}
 				$tempEvent['url'] = 'http://www.facebook.com/events/'.$event['id'].'/';
+				$tempEvent['timestamp'] = $eventTime;
 				
 				$outputEvents[] = $tempEvent; //append the event
 			}
@@ -180,6 +184,8 @@ if($user){
 		}
 		
 		writeArrayToCache($eventCache);
+		
+		usort($outputEvents, 'orderMyEvents');
 		
 		header('Content-Type: application/json');
 		echo json_encode(array('events'=>$outputEvents));
