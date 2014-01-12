@@ -83,13 +83,13 @@ class Page{
 
 	//Return nothing; print out the page. 
 	function getContent(){
-		$this->sql = mysql_connect(DB_HOST,DB_USER,DB_PASSWORD);
+		$this->sql = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD);
+		$this->sql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		if(!$this->sql){
 			echo "Error connecting to database!";
 			logError("page.shows.php",__LINE__,"Error connecting to database!",mysql_error(),time(),false);
 		}
 		else{
-			mysql_select_db(DB_NAME, $this->sql);
 			require_once "showhelper.php";
 			global $THEATER_LOCATIONS;
 			$season_info = get_current_season();
@@ -98,27 +98,27 @@ class Page{
 			//Get the current season
 			//$show_query = "SELECT show_id,show_name,show_abbr,byline,location,image FROM shows WHERE show_term='{$season_info[current][term]}' AND show_year='{$season_info[current][year]}'";
 			$show_query = "SELECT shows.show_id, shows.show_name, shows.show_abbr, shows.show_term, shows.show_year, shows.byline, shows.location, shows.image, e.close FROM shows LEFT JOIN (SELECT show_id, MAX(ticket_close) AS close FROM events WHERE active='1' GROUP BY show_id) AS e ON shows.show_id = e.show_id WHERE show_term='{$season_info['current']['term']}' AND show_year='{$season_info['current']['year']}'";
-			$show_response = mysql_query($show_query,$this->sql);
-			if(!$show_response){
-				die("Error fetching show list! " . mysql_error());
-			}
-			if(mysql_num_rows($show_response) == 0){
-				$show_query = "SELECT shows.show_id, shows.show_name, shows.show_abbr, shows.show_term, shows.show_year, shows.byline, shows.location, shows.image, e.close FROM shows LEFT JOIN (SELECT show_id, MAX(ticket_close) AS close FROM events WHERE active='1' GROUP BY show_id) AS e ON shows.show_id = e.show_id WHERE show_term='{$season_info['previous']['term']}' AND show_year='{$season_info['previous']['year']}'";
-				$show_response = mysql_query($show_query,$this->sql);
-				if(!$show_response){
-					die("Error fetching show list-! "  . mysql_error());
+			try{
+				$show_response = $this->sql->query($show_query);
+				
+				if($show_response->rowCount() == 0){
+					$show_query = "SELECT shows.show_id, shows.show_name, shows.show_abbr, shows.show_term, shows.show_year, shows.byline, shows.location, shows.image, e.close FROM shows LEFT JOIN (SELECT show_id, MAX(ticket_close) AS close FROM events WHERE active='1' GROUP BY show_id) AS e ON shows.show_id = e.show_id WHERE show_term='{$season_info['previous']['term']}' AND show_year='{$season_info['previous']['year']}'";
+					$show_response = $this->sql->query($show_query);
 				}
+			}
+			catch(PDOException $e){
+				die("Error fetching show list! " . $e->getMessage());
 			}
 			
 			$current_season_ids = array();
 			ob_start();
-			if(mysql_num_rows($show_response) > 0){	
+			if($show_response->rowCount()  > 0){	
 			?>
 				<section class="full nopad">
 					<h1>Current season</h1>
 					<div class="current_season_container">
 					<?php
-					while($show = mysql_fetch_assoc($show_response)){ 
+					while($show = $show_response->fetch(PDO::FETCH_ASSOC)){ 
 						array_push($current_season_ids,$show['show_id']);
 						?>
 						<div class="show_item" id="<?php echo $show['show_abbr']; ?>_show_item">
@@ -163,20 +163,25 @@ class Page{
 			$past_show_query = "SELECT show_id,show_name,show_abbr,show_term,show_year,byline,location,image FROM shows";
 			if($helper_query != "") $past_show_query .= " WHERE $helper_query";
 			$past_show_query .= "ORDER BY show_year DESC, show_term ASC;";
-			$past_show_response = mysql_query($past_show_query,$this->sql);
-			if(mysql_num_rows($past_show_response) > 0){ ?>
+			try{
+				$past_show_response = $this->sql->query($past_show_query);
+			}
+			catch(PDOException $e){
+				echo 'Error fetching previous seasons\' information! '.$e->getMessage();
+			}
+			if($past_show_response->rowCount() > 0){ ?>
 				<section class="full nopad">
 					<h1>Previous seasons</h1>
 					<div class="previous_season_container">
 					<?php
-					while($show = mysql_fetch_assoc($past_show_response)){ 
+					while($show = $past_show_response->fetch(PDO::FETCH_ASSOC)){ 
 						array_push($current_season_ids,$show['show_id']);
 						?>
 						<div class="show_item" id="<?php echo $show['show_abbr']; ?>_show_item">
 							<img src="<?php if(isset($show['image']) && ($show['image'] != null || $show['image'] != "")){ echo $show['image']; }else{echo NO_SHOW_IMAGE_DEFAULT;} ?>" alt="<?php echo $show['show_name']; ?>"/>
 							<div class="details">
 								<h3 class="show_item_name"><a href="<?php echo "/show/{$show['show_abbr']}"; ?>"><?php echo $show['show_name']; ?></a></h3>
-								<div><?php echo $show['byline']; ?></div>
+								<div><?php echo $this->utf8_urldecode($show['byline']); ?></div>
 								<div><?php if(array_key_exists($show['location'],$THEATER_LOCATIONS)){ $data = $THEATER_LOCATIONS[$show['location']]; echo "Located at the <a href=\"/map/{$data['short']}\">{$data['name']}</a>"; } ?></div>
 							</div>
 							<aside>
