@@ -127,52 +127,50 @@ class Page{
 	 * If it returns false, the page will stop loading.
 	 **/
 	function preloadPage(){
-		$this->sql = mysql_connect(DB_HOST,DB_USER,DB_PASSWORD);
-		if(!$this->sql){
-			logError("page.tickets.php",__LINE__,"Error connecting to database!",mysql_error(),time(),false);
+		$this->sql = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD);
+		$this->sql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			
+		if(!$this->has_input_at(0)){
+			header("Location: /shows");
 			return false;
 		}
-		else{
-			mysql_select_db(DB_NAME, $this->sql);
-			
-			if(!$this->has_input_at(0)){
-				header("Location: /shows");
-				return false;
-			}
-			$requested_show = substr(strtolower($this->get_input_at(0)),0,10);
-			if($requested_show == null || $requested_show == "" || preg_match("/[^\w_-]/",$requested_show)){
-				header("Location: /shows");
-				return false;
-			}
-			
-			$show_query = "SELECT shows.show_id, shows.show_name, shows.show_abbr, shows.show_term, shows.show_year, shows.byline, shows.location, shows.image, shows.director, shows.synopsis, shows.fine_print, shows.promo, e.open, e.close FROM shows LEFT JOIN (SELECT show_id, MAX(event_date) AS close, MIN(event_date) AS open FROM events WHERE active='1' GROUP BY show_id) AS e ON shows.show_id = e.show_id WHERE shows.show_abbr='$requested_show' LIMIT 1";
-			$show_response = mysql_query($show_query,$this->sql);
-			if(!$show_response){
-				logError("page.tickets.php",__LINE__,"Error retrieving available events!",mysql_error(),time(),false);
-				return;
+		$requested_show = substr(strtolower($this->get_input_at(0)),0,10);
+		if($requested_show == null || $requested_show == "" || preg_match("/[^\w_-]/",$requested_show)){
+			header("Location: /shows");
+			return false;
+		}
+		
+		$show_query = "SELECT shows.show_id, shows.show_name, shows.show_abbr, shows.show_term, shows.show_year, shows.byline, shows.location, shows.image, shows.director, shows.synopsis, shows.fine_print, shows.promo, e.open, e.close FROM shows LEFT JOIN (SELECT show_id, MAX(event_date) AS close, MIN(event_date) AS open FROM events WHERE active='1' GROUP BY show_id) AS e ON shows.show_id = e.show_id WHERE shows.show_abbr='$requested_show' LIMIT 1";
+		try{
+			$show_response = $this->sql->query($show_query);
+			if($show_response->rowCount() === 1){
+				$this->show_data = $show_response->fetch(PDO::FETCH_ASSOC);
 			}
 			else{
-				if(mysql_num_rows($show_response) === 1){
-					$this->show_data = mysql_fetch_assoc($show_response);
-				}
-				else{
-					header("Location: /shows");
-					return;
-				}
-			}
-			$cast_query = "SELECT person_name AS name, role, type AS position FROM cast_and_crew WHERE show_id='{$this->show_data['show_id']}' ORDER BY type, position;";
-			$cast_response = mysql_query($cast_query,$this->sql);
-			if(!$cast_response){
-				logError("page.tickets.php",__LINE__,"Error retrieving cast list! Query: \"$cast_query\".",mysql_error(),time(),false);
+				header("Location: /shows");
 				return;
-			}
-			else{
-				if(mysql_num_rows($cast_response) > 0){
-					$this->cast_data = $cast_response;
-				}
 			}
 		}
-		return true; 
+		catch(PDOException $e){
+			logError("page.show.php",__LINE__,"Error retrieving available events!",$e->getMessage(),time(),false);
+			echo 'Something went wrong while trying to access this show\'s information!';
+			return;
+		}
+		
+		$cast_query = "SELECT person_name AS name, role, type AS position FROM cast_and_crew WHERE show_id='{$this->show_data['show_id']}' ORDER BY type, position;";
+		
+		try{
+			$cast_response = $this->sql->query($cast_query);
+			if($cast_response->rowCount() > 0){
+				$this->cast_data = $cast_response;
+			}
+		}
+		catch(PDOException $e){
+			logError("page.show.php",__LINE__,"Error retrieving cast list! Query: \"$cast_query\".",$e->getMessage(),time(),false);
+			echo 'Something went wrong while trying to access this show\'s information!';
+			return;
+		}
+			
 	}
 
 	/**
@@ -251,7 +249,7 @@ class Page{
 			if($this->cast_data != null){
 				$is_cast = false;
 				$new = true;
-				while($crew_member = mysql_fetch_assoc($this->cast_data)){
+				while($crew_member = $this->cast_data->fetch(PDO::FETCH_ASSOC)){
 					if($crew_member['position'] == 'cast' && $new){
 						$is_cast = true;
 						$new = false; ?>
