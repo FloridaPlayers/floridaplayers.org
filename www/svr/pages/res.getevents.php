@@ -112,8 +112,9 @@ if($user){
 						$eventCache['wall_posts']['data'][$eventId] = array('link'=>$post['link']);
 					}
 					
-					if(!in_array($eventId,$eventIds) && (!isset($eventCache['ignored']) || !in_array($eventId,$eventCache['ignored']))){ //Make sure this is only events that we haven't already gotten from the list of page-created events.
+					if(!in_array($eventId,$eventIds) || !isset($eventCache['ignored']) || !in_array($eventId,$eventCache['ignored'])){ //Make sure this is not a duplicate event, and that it is not an ignored event
 						try{
+							$eventIds[] = $eventId; //Append this event id.
 							if(isset($eventCache['event_data']) && array_key_exists($eventId,$eventCache['event_data'])){
 								$cachedEvent = $eventCache['event_data'][$eventId];
 								if(((time() - $cachedEvent['data_acquired']) / 3600.0) <= 6.0){ //If the data is less than 6 hours old
