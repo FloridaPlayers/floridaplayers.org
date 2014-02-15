@@ -41,8 +41,9 @@ $MENU_ITEMS = array(
 	array("sub" => "about","label" => "About Us","title" => "About Florida Players", "perm" => 0),
 	array("sub" => "shows","label" => "Shows","title" => "See our current and past productions", "perm" => 0, "mask" => array("show")), //Mask is a list of subs that will be shown under this menu shortcut
 	array("sub" => "tickets","label" => "Tickets","title" => "Reserve tickets for a show", "perm" => 0),
-	array("sub" => "media","label" => "Media","title" => "Florida Players media", "perm" => 0),
+	array("sub" => "media","label" => "Photos","title" => "Florida Players photos and media", "perm" => 0),
 	array("sub" => "resources","label" => "Resources","title" => "Resources", "perm" => 0),
+	array('sub' => 'contact','label' => 'Contact', 'title' => 'Contact us','perm' => 0),
 	array("sub" => "admin","label" => "Admin","title" => "Admin", "perm" => 1)
 	);
 $MENU_ALIASES = array("sub" => "show","alias" => "shows");
@@ -70,15 +71,15 @@ $THEATER_LOCATIONS = array(
 $PAGE_FORWARDING = array(
 	'index.php' => '/home',
 	'about.php' => '/about',
-	'contact.php' => '/about/contact',
+	'contact.php' => '/contact',
 	'friends.php' => '/about/friends',
 	'gallery.php' => '/media',
 	'maps.php' => '/map',
 	'points.php' => '/points',
 	'ticketing.php' => '/tickets',
 	'shows.php' => '/shows',
-	'contact' => '/about/contact',
-	'board' => '/about/contact'
+	'about/contact' => '/contact',
+	'board' => '/contact',
 );
 
 //The location for the text file containing the template for ticket confirmation emails (Plain text)
