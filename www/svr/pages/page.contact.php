@@ -156,13 +156,13 @@ Etc.</p>
 						<span class="email"><?php echo $this->str_rot('secretary@floridaplayers.org',17); ?></span>
 						<p>Drew Bryan is a junior studying Theatre performance and Telecommunications. Her passions include acting, elephants, and good books</p>
 					</li>
-					<li>
-						<img src="/res/images/exec-board/casey.jpg" />
-						<span class="name">Casey Henshaw</span>
+					<!--<li>
+						<img src="" />
+						<span class="name"></span>
 						<span class="position">Special Events Coordinator</span>
 						<span class="email"><?php echo $this->str_rot('specialevents@floridaplayers.org',17); ?></span>
-						<p>Casey Henshaw is a second year Event Management major at the University of Florida. Her minor is in theatre, and she has been dancing and doing theatre almost her entire life. She is so excited to be a part of the Executive Board this year, and if you are interested in helping with or participating in any kind of special event, she would love to hear from you!</p>
-					</li>
+						<p></p>
+					</li>-->
 					<li>
 						<img src="/res/images/exec-board/bido.jpg" />
 						<span class="name">Anthony Bido</span>
