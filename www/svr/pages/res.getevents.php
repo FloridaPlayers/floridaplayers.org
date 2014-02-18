@@ -160,10 +160,10 @@ if($user){
 				
 				global $THEATER_LOCATIONS;
 				
-				if(stristr($event['location'],$THEATER_LOCATIONS['1']['short']) !== false){
+				if(stristr($event['location'],$THEATER_LOCATIONS['1']['short']) !== false || (isset($THEATER_LOCATIONS['1']['keywords']) && stristr($event['location'],$THEATER_LOCATIONS['1']['keywords']) !== false)){
 					$tempEvent['location'] = '<a class="location" href="/map/'.$THEATER_LOCATIONS['1']['short'].'">'.$event['location'].'</a>';
 				}
-				elseif(stristr($event['location'],$THEATER_LOCATIONS['2']['short']) !== false){
+				elseif(stristr($event['location'],$THEATER_LOCATIONS['2']['short']) !== false || (isset($THEATER_LOCATIONS['2']['keywords']) && stristr($event['location'],$THEATER_LOCATIONS['2']['keywords']) !== false)){
 					$tempEvent['location'] = '<a class="location" href="/map/'.$THEATER_LOCATIONS['2']['short'].'">'.$event['location'].'</a>';
 				}
 				else{

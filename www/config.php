@@ -63,7 +63,7 @@ define('NO_SHOW_IMAGE_DEFAULT','/res/images/show-icons/no-picture.png');
 
 //The key of the primary array should be equal to the id of the sub-array
 $THEATER_LOCATIONS = array(
-	"1" => array("id" => "1","name" => "Squitieri Studio Theatre","short" => "squitieri"),
+	"1" => array("id" => "1","name" => "Squitieri Studio Theatre","short" => "squitieri", "keywords" => "phillips"),
 	"2" => array("id" => "2","name" => "Black Box Theatre in the McGuire Pavilion","short" => "mcguire")
 );
 
