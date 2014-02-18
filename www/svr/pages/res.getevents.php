@@ -112,7 +112,7 @@ if($user){
 						$eventCache['wall_posts']['data'][$eventId] = array('link'=>$post['link']);
 					}
 					
-					if(!in_array($eventId,$eventIds) || !isset($eventCache['ignored']) || !in_array($eventId,$eventCache['ignored'])){ //Make sure this is not a duplicate event, and that it is not an ignored event
+					if(!in_array($eventId,$eventIds)  && (!isset($eventCache['ignored']) || !in_array($eventId,$eventCache['ignored']))){ //Make sure this is not a duplicate event, and that it is not an ignored event
 						try{
 							$eventIds[] = $eventId; //Append this event id.
 							if(isset($eventCache['event_data']) && array_key_exists($eventId,$eventCache['event_data'])){
