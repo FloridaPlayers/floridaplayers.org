@@ -74,7 +74,7 @@ if($user){
 		
 		$events = null;
 		if(isset($eventCache['page_events']) && isset($eventCache['page_events']['data_acquired'])){
-			if(((time() - $eventCache['page_events']['data_acquired']) / 3600.0) <= 6.0){ //If data is less than 2 hours old
+			if(((time() - $eventCache['page_events']['data_acquired']) / 3600.0) <= 2.0){ //If data is less than 2 hours old
 				debug("using cached events");
 				$events = $eventCache['page_events'];
 			}
@@ -106,7 +106,7 @@ if($user){
 		$postedEvents = array();
 		foreach($posts['data'] as $post){
 			if(isset($post['link'])){
-				if(preg_match('#facebook\.com/events/(\d{15})/.*?#',$post['link'],$matches)){ //Find the IDs of events posted by the page.
+				if(preg_match('#facebook\.com/events/(\d{15,16})/(?:.*?)?#',$post['link'],$matches)){ //Find the IDs of events posted by the page.
 					$eventId = $matches[1];
 					if(isset($eventCache['wall_posts']['data']) && !array_key_exists($eventId,$eventCache['wall_posts']['data'])){
 						$eventCache['wall_posts']['data'][$eventId] = array('link'=>$post['link']);
@@ -176,7 +176,9 @@ if($user){
 			}
 			else{
 				debug("adding {$event['id']} to ignore list");
-				$eventCache['ignored'][] = $event['id'];
+				if(!in_array($event['id'],$eventCache['ignored'])){
+					$eventCache['ignored'][] = $event['id'];
+				}
 				if(array_key_exists($event['id'],$eventCache['event_data'])){
 					debug("removing {$event['id']} from cache");
 					unset($eventCache['event_data'][$event['id']]);
