@@ -32,7 +32,7 @@ if($infoStmt->rowCount() === 1){
 }
 
 try{
-	$reservationsStmt = $sql->prepare('SELECT r.reservation_id, CASE WHEN r.email_address IS NULL THEN u.email ELSE r.email_address END AS email, CASE WHEN r.first_name IS NULL THEN u.first_name ELSE r.first_name END AS fname, CASE WHEN r.last_name IS NULL THEN u.last_name ELSE r.last_name END AS lname, sum(r.ticket_quantity) AS quantity FROM reservations AS r LEFT JOIN users AS u ON r.user_id=u.uid WHERE r.event_id=:eid GROUP BY r.email_address,u.email ORDER BY lname,fname');
+	$reservationsStmt = $sql->prepare('SELECT r.reservation_id, CASE WHEN r.email_address IS NULL THEN u.email ELSE r.email_address END AS email, CASE WHEN r.first_name IS NULL THEN u.first_name ELSE r.first_name END AS fname, CASE WHEN r.last_name IS NULL THEN u.last_name ELSE r.last_name END AS lname, sum(r.ticket_quantity) AS quantity, sum(r.ticket_quantity * r.vip) AS vip, r.checked_in FROM reservations AS r LEFT JOIN users AS u ON r.user_id=u.uid WHERE r.event_id=:eid GROUP BY r.email_address,u.email ORDER BY lname,fname');
 	$reservationsStmt->execute(array(':eid'=>$requestedShow));
 }
 catch(PDOException $e){
@@ -57,10 +57,10 @@ if($reservationsStmt->rowCount() > 0){
 	header("Expires: 0"); 
 
 	$cr = "\n";
-	$data = "First Name" . ',' . "Last Name" . ',' . "Ticket Amount" . ',' . "Email Address" . $cr;
+	$data = "First Name" . ',' . "Last Name" . ',' . "Ticket Amount" . ',VIP,' . "Email Address" . $cr;
 
 	while ($row = $reservationsStmt->fetch()) {
-		$data .= ucwords($row['fname']) . ',' . ucwords($row['lname']) . ',' . $row['quantity'] . ',' . $row['email'] . $cr;
+		$data .= ucwords($row['fname']) . ',' . ucwords($row['lname']) . ',' . $row['quantity'] . ',' . (($row['vip'] > 0)?$row['vip']:'') . ',' . $row['email'] . $cr;
 	}
 	unset($sql,$row,$result,$usertable);
 	echo $data;

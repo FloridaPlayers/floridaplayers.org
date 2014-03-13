@@ -91,6 +91,7 @@ class User{
 				return true;
 			}
 		}
+		return false;
 	}
 			
 	function authenticate(){
@@ -133,17 +134,12 @@ class User{
 	}
 	function get_user_info($info){
 		//echo $this->dbReturn['first_name'];
-		if($this->dbReturn != null){
+		if(isset($this->dbReturn) && $this->dbReturn != null){
 			if(array_key_exists($info,$this->dbReturn)){
 				return $this->dbReturn[$info];
 			}
-			else{
-				return false;
-			}
 		}
-		else{
-			return false;
-		}
+		return false;
 	}
 	function set_user_info($col,$val){
 		$userID = $_SESSION['USER_ID'];
