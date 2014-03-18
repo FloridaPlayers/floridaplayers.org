@@ -77,7 +77,7 @@ if($user){
 		
 		$events = null;
 		if(isset($eventCache['page_events']) && isset($eventCache['page_events']['data_acquired'])){
-			if(((time() - $eventCache['page_events']['data_acquired']) / 3600.0) <= 6.0){ //If data is less than 2 hours old
+			if(((time() - $eventCache['page_events']['data_acquired']) / 3600.0) <= 2.0){ //If data is less than 2 hours old
 				debug("using cached events");
 				$events = $eventCache['page_events'];
 			}
@@ -109,13 +109,13 @@ if($user){
 		$postedEvents = array();
 		foreach($posts['data'] as $post){
 			if(isset($post['link'])){
-				if(preg_match('#facebook\.com/events/(\d{15})/.*?#',$post['link'],$matches)){ //Find the IDs of events posted by the page.
+				if(preg_match('#facebook\.com/events/(\d{15,16})/(?:.*?)?#',$post['link'],$matches)){ //Find the IDs of events posted by the page.
 					$eventId = $matches[1];
 					if(isset($eventCache['wall_posts']['data']) && !array_key_exists($eventId,$eventCache['wall_posts']['data'])){
 						$eventCache['wall_posts']['data'][$eventId] = array('link'=>$post['link']);
 					}
 					
-					if(!in_array($eventId,$eventIds) || !isset($eventCache['ignored']) || !in_array($eventId,$eventCache['ignored'])){ //Make sure this is not a duplicate event, and that it is not an ignored event
+					if(!in_array($eventId,$eventIds)  && (!isset($eventCache['ignored']) || !in_array($eventId,$eventCache['ignored']))){ //Make sure this is not a duplicate event, and that it is not an ignored event
 						try{
 							$eventIds[] = $eventId; //Append this event id.
 							if(isset($eventCache['event_data']) && array_key_exists($eventId,$eventCache['event_data'])){
@@ -163,10 +163,10 @@ if($user){
 				
 				global $THEATER_LOCATIONS;
 				
-				if(stristr($event['location'],$THEATER_LOCATIONS['1']['short']) !== false){
+				if(stristr($event['location'],$THEATER_LOCATIONS['1']['short']) !== false || (isset($THEATER_LOCATIONS['1']['keywords']) && stristr($event['location'],$THEATER_LOCATIONS['1']['keywords']) !== false)){
 					$tempEvent['location'] = '<a class="location" href="/map/'.$THEATER_LOCATIONS['1']['short'].'">'.$event['location'].'</a>';
 				}
-				elseif(stristr($event['location'],$THEATER_LOCATIONS['2']['short']) !== false){
+				elseif(stristr($event['location'],$THEATER_LOCATIONS['2']['short']) !== false || (isset($THEATER_LOCATIONS['2']['keywords']) && stristr($event['location'],$THEATER_LOCATIONS['2']['keywords']) !== false)){
 					$tempEvent['location'] = '<a class="location" href="/map/'.$THEATER_LOCATIONS['2']['short'].'">'.$event['location'].'</a>';
 				}
 				else{
@@ -179,7 +179,9 @@ if($user){
 			}
 			else{
 				debug("adding {$event['id']} to ignore list");
-				$eventCache['ignored'][] = $event['id'];
+				if(!in_array($event['id'],$eventCache['ignored'])){
+					$eventCache['ignored'][] = $event['id'];
+				}
 				if(array_key_exists($event['id'],$eventCache['event_data'])){
 					debug("removing {$event['id']} from cache");
 					unset($eventCache['event_data'][$event['id']]);

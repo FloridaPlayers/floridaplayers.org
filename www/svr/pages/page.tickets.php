@@ -557,6 +557,10 @@ class Page{
 									$this->text_input("Email address","email_address",true);
 								}?>
 							</fieldset>
+							<fieldset>
+								<legend>VIP Reservations</legend>
+								<p>Florida Players is now offering VIP reservations! For $3 for a single ticket, or $5 for two tickets, a VIP reservation will guarantee seating in the first three rows. To upgrade your tickets, complete your reservation, then email <span class="email"><?php echo $this->str_rot('reservations@floridaplayers.org?subject=VIP Reservation',17); ?></span> with your name and the email used for the reservation. </p>
+							</fieldset>
 							<input type="submit" value="Submit reservation" id="input_submit_reservation" />
 							<div id="loadingAnimatin" class="loading windows8">
 								<div class="wBall" id="wBall_1">
@@ -576,12 +580,23 @@ class Page{
 								</div>
 							</div>
 						</form>
+						
 					<?php
 					}
 					else{ ?>
 						<section>No events are open for reservations at the time! Check back later.</section>
 					<?php } ?>
 				</div>
+				<script type="text/javascript">
+					$(document).ready(function(){
+						$('.email').each(function(){
+							var text = $(this).html();
+							var address = text.replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+9)?c:c-26);});
+							var display = address.replace(/\?.*$/,'');
+							$(this).html('<a href="mailto:'+address+'">'+display+'</a>');
+						});
+					});
+				</script>
 				<?php
 			}
 		}
@@ -606,6 +621,21 @@ class Page{
 	function get_input_at($pos){
 		if(isset($this->request) && isset($this->request["flags"][$pos])) return $this->request["flags"][$pos];
 		else return null;
+	}
+	function str_rot($s, $n = 13) {
+		static $letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$n = (int)$n % 26;
+		if (!$n) return $s;
+		if ($n == 13) return str_rot13($s);
+		for ($i = 0, $l = strlen($s); $i < $l; $i++) {
+			$c = $s[$i];
+			if ($c >= 'a' && $c <= 'z') {
+				$s[$i] = $letters[(ord($c) - 71 + $n) % 26];
+			} else if ($c >= 'A' && $c <= 'Z') {
+				$s[$i] = $letters[(ord($c) - 39 + $n) % 26 + 26];
+			}
+		}
+		return $s;
 	}
 }
 ?>
