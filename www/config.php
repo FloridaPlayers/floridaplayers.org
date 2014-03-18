@@ -69,17 +69,17 @@ $THEATER_LOCATIONS = array(
 
 //old urls and the new paths to forward them to
 $PAGE_FORWARDING = array(
-	'index.php' => '/home',
-	'about.php' => '/about',
-	'contact.php' => '/contact',
-	'friends.php' => '/about/friends',
-	'gallery.php' => '/media',
-	'maps.php' => '/map',
-	'points.php' => '/points',
-	'ticketing.php' => '/tickets',
-	'shows.php' => '/shows',
-	'about/contact' => '/contact',
-	'board' => '/contact',
+	'/index.php' => '/home',
+	'/about.php' => '/about',
+	'/contact.php' => '/contact',
+	'/friends.php' => '/about/friends',
+	'/gallery.php' => '/media',
+	'/maps.php' => '/map',
+	'/points.php' => '/points',
+	'/ticketing.php' => '/tickets',
+	'/shows.php' => '/shows',
+	'/about/contact' => '/contact',
+	'/board' => '/contact',
 );
 
 //The location for the text file containing the template for ticket confirmation emails (Plain text)

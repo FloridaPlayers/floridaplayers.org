@@ -194,7 +194,11 @@ function get_request_hierarchy($get_request){
 	// return $hierarchy;
 }
 function clean_path($path){
-	return preg_replace('/\./','',$path); //For now I'm just removing periods
+	$matchVal = preg_match('#^(?\'path\'(?:[/a-zA-Z0-9-_])+)(?:.*?)$#',$path,$matches);
+	if($matchVal === 0 || $matchVal === false){
+		return '/';
+	}
+	return $matches['path'];
 }
 function clean_keys($keys){
 	$cleaned = array();
@@ -226,6 +230,7 @@ function validate_input($item){
 }
 
 function not_found(){
+	header('HTTP/1.1 404 Not Found');
 	die("404");
 }
 
@@ -254,6 +259,15 @@ function handle_special_request($path){
 		header("Location: {$PAGE_FORWARDING[$path]}");
 	}
 }
+
+function parse_path(){
+	//http://stackoverflow.com/questions/16388959/url-rewriting-with-php
+	$uri = rtrim( dirname($_SERVER["SCRIPT_NAME"]), '/' );
+	$uri = '/' . trim( str_replace( $uri, '', $_SERVER['REQUEST_URI'] ), '/' );
+	$uri = urldecode( $uri );
+	
+	return $uri;
+}
 	
 
 /**
@@ -268,9 +282,12 @@ if(!is_good_file(TEMPLATE_FILE)){
 }
 $template = file_get_contents(TEMPLATE_FILE);
 
-if(isset($_GET['path']) && !$_GET['path'] == ""){
-	handle_special_request($_GET['path']);
-	$request = get_request_hierarchy(clean_path($_GET['path']));
+$path = parse_path();
+
+if(isset($path) && !$path == '' && $path != '/'){
+	handle_special_request($path);
+	$request = get_request_hierarchy(clean_path($path));
+
 	if(isset($request["file"])){
 		$file = SERVER_PAGE_DIR.$request['file'];
 		if(is_good_file($file)){
@@ -295,19 +312,7 @@ if(isset($_GET['path']) && !$_GET['path'] == ""){
 else{
 	load_page("home",$template);
 }
-// if(isset($request['page'])){
-	// $file = SERVER_PAGE_DIR.LIVE_PAGE_PREFIX.'.'.(isset($request['sub'])?$request['sub'].'.':'').$request['page'].'.php';
-	// if(is_good_file($file)){
-		// require_once($file);
-		// display_page($template,array("Title" => array("func" => "displayTitle"),"MetaMessage" => array("func" => "build_meta_message"),"Content" => array("func" => "getContent","page" => true),"HeadResources" => array("func" => "customHead","page" => true),"Navigation" => array("func" => "build_nav","args" => array($request['page'],(isset($request['sub'])?$request['sub']:"")))),$request);
-	// }
-	// else{
-		// not_found();
-	// }
-// }
-// else{
-	// load_page("home",$template);
-// }
+
 
 ?>
 		
