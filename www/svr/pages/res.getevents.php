@@ -33,13 +33,15 @@ function loadArrayFromCache(){
 	return json_decode(file_get_contents($file),true);
 }
 function debug($message){
-	//echo $message . "<br />";
+	echo $message . "<br />";
 }
 
 function orderMyEvents($a, $b) {
 	return $a['timestamp'] - $b['timestamp'];
 }
 
+debug("beginning script");
+debug("initializing facebook variable");
 
 //initializing keys
 $facebook = new Facebook(array(
@@ -53,6 +55,7 @@ if(isset($conf['facebook']['access_code'])){
 	$facebook->setExtendedAccessToken();
 }
 
+debug('initializing facebook user');
 $user = $facebook->getUser();
 if($user){
 	try {
