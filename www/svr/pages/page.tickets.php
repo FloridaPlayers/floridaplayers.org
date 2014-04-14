@@ -514,7 +514,9 @@ class Page{
 				<h1>Tickets</h1>
 				<article>
 					<section>
+						<?php if(time() < 1397520000){ ?>
 						<div id="news_message">Tickets for <em>Florida Players Presents Spring Awakening</em> will be made available Monday, April 14th at 8PM.</div>
+						<?php } ?>
 						<p>Welcome to the online ticketing system for Florida Players. Tickets will become available for reservation approximately two weeks prior to opening night of each show.</p>
 						<p>Some shows may be sold out or closed. If a show is listed as closed, it means that the online signup period has ended but that there are still tickets available. If a show is sold out or closed, PLEASE join us at the theatre 30 minutes before the start of the show and our house manager will add you to the waiting list. For various reasons, some patrons are unable to attend despite reserving tickets. If you show up to a performance without a reservation, you more than likely will be able to see it. ALSO, check back the monday before opening week of the show, as many times more seats are able to be added at this date.</p>
 						<p>Please note that ONLY 2 TICKETS may be reserved by each individual for the entire run of the show. This will be managed manually, so any extras will be removed and the actual amount reserved will only be 2 tickets. This is strictly enforced. If you reserve more than 2 tickets under the same name, you are not guaranteed to seat any more than 2 people.</p>

@@ -393,8 +393,13 @@ elseif(isset($_GET['get_event_list'])){
 					<input type="submit" value="Archive" />
 				</form>
 				<?php } ?>
-				<input type="button" value="Export" />
-				<input type="button" value="View" />
+				<form class="event_form" action="/admin/ticketlist/download" method="get">
+					<input type="hidden" name="event" value="<?php echo $row['event_id']; ?>" />
+					<input type="submit" value="Export" />
+				</form>
+				<form class="event_form" action="/admin/ticketlist/<?php echo $row['event_id']; ?>" method="post">
+					<input type="submit" value="View" />
+				</form>
 				<input type="button" value="Edit" />
 			</div>
 			<div class="clear"></div>
