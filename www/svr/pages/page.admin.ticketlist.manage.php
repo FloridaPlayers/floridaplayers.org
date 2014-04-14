@@ -56,6 +56,10 @@ class Page{
 				$ticketListKeyInsert->bindParam(':key',$key,PDO::PARAM_STR);
 				$ticketListKeyInsert->bindParam(':eid',$show['event_id'],PDO::PARAM_INT);
 				$ticketListKeyInsert->execute();
+				
+				if($ticketListKeyInsert->rowCount() == 0){
+					echo "Unable to insert key for {$show['event_id']}!";
+				}
 			}
 		}
 		catch(PDOException $e){

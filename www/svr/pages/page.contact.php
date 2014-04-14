@@ -100,6 +100,7 @@ class Page{
 			<section>
 				<ul id="boardList">
 					<li>
+						<a name="ad"></a>
 						<img src="/res/images/exec-board/megan.jpg" />
 						<span class="name">Megan Wicks</span>
 						<span class="position">Artistic Director</span>
@@ -108,6 +109,7 @@ class Page{
 Contact for: General questions regarding Florida Players, Master Class</p>
 					</li>
 					<li>
+						<a name="aad"></a>
 						<img src="/res/images/exec-board/kevin.jpg" />
 						<span class="name">Kevin Roost</span>
 						<span class="position">Assistant Artistic Director</span>
@@ -115,6 +117,7 @@ Contact for: General questions regarding Florida Players, Master Class</p>
 						<p>Kevin is beyond appreciative to be your Assistant Artistic Director and will be happy to serve you in any way possible. He has been seen in Floyd Collins, Shotgun Party, A New Brain, Too Much Light Makes the Baby Go Blind, and will be directing Change Provided as a part of the New Works Festival. If you really want him to like you, feed him Reese's, sing him Newsies, or bring him a puppy to play with. Thanks for playing! </p>
 					</li>
 					<li>
+						<a name="pm"></a>
 						<img src="/res/images/exec-board/kimberly.jpg" />
 						<span class="name">Kimberly Yeoman</span>
 						<span class="position">Production Manager</span>
@@ -130,6 +133,7 @@ Show Proposals
 Etc.</p>
 					</li>
 					<li>
+						<a name="tres"></a>
 						<img src="/res/images/exec-board/katina.jpg" />
 						<span class="name">Katina White</span>
 						<span class="position">Treasurer</span>
@@ -137,12 +141,14 @@ Etc.</p>
 						<p>Katina is enthralled to be your treasurer. Her first experience with the Florida Players was light board operator for Jeffrey. She enjoys kittens, long walks on the beach, managing the money, and creating SARs. Please contact her for any Florida Players financial concerns or if you are interested in joining the finance committee. </p>
 					</li>
 					<li>
+						<a name="pub"></a>
 						<img src="/res/images/exec-board/lauren.jpg" />
 						<span class="name">Lauren Killer</span>
 						<span class="position">Publicist</span>
 						<span class="email"><?php echo $this->str_rot('publicist@floridaplayers.org',17); ?></span>
 					</li>
 					<li>
+						<a name="apub"></a>
 						<img src="/res/images/exec-board/christian.jpg" />
 						<span class="name">Christian Allison</span>
 						<span class="position">Assistant Publicist</span>
@@ -150,6 +156,7 @@ Etc.</p>
 						<p>Christian is new to the executive board of Florida Players. In addition to graphic design, he enjoys theatre, music and more tea than can be considered healthy. As Assistant Publicist, he works primarily with the visual aspect of the production, creating posters, pamphlets, and anything else that can be used to promote the organization and its shows! Anyone with any interest in the Publicity team may contact him or the Senior Publicist, Lauren Killer.</p>
 					</li>
 					<li>
+						<a name="sec"></a>
 						<img src="/res/images/exec-board/drew.jpg" />
 						<span class="name">Drew Bryan</span>
 						<span class="position">Secretary</span>
@@ -164,6 +171,7 @@ Etc.</p>
 						<p></p>
 					</li>-->
 					<li>
+						<a name="hist"></a>
 						<img src="/res/images/exec-board/bido.jpg" />
 						<span class="name">Anthony Bido</span>
 						<span class="position">Historian</span>
@@ -171,6 +179,7 @@ Etc.</p>
 						<p>Anthony Bido is a junior BFA acting major. He's been a member of Florida Players for the past two years working mostly behind the scenes. He enjoys lights and shiny things. Contact him for archive information and photo calls.</p>
 					</li>
 					<li>
+						<a name="web"></a>
 						<img src="/res/images/exec-board/webmaster.jpg" />
 						<span class="name">Marcus Ball</span>
 						<span class="position">Webmaster</span> <!-- Grand Master of the Web -->
