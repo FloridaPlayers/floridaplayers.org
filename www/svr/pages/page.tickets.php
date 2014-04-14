@@ -130,7 +130,7 @@ class Page{
 				success: function(data, textStatus, jqXHR) {
 					var data_return = $.parseJSON(data);
 					if(data_return.status == "success"){
-						$("#reservation_message").html("<strong>Reservation successful!</strong><br />Thank you for reservation! You will receive a confirmation email with further information.").show();
+						$("#reservation_message").html('<strong>Reservation successful!</strong><p>Thank you for reservation! You will receive a confirmation email with further information.</p><p>Let your friends know and make them jealous! <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://floridaplayers.org/tickets" data-text="I just reserved my tickets for #FloridaPlayers Presents Spring Awakening!" data-via="florida_players" data-hashtags="fpspringawakening" data-size="large" data-count="none" data-dnt="true">Tweet</a><scr'+'ipt>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+\'://platform.twitter.com/widgets.js\';fjs.parentNode.insertBefore(js,fjs);}}(document, \'script\', \'twitter-wjs\');</scr'+'ipt>').show();
 						$.scrollTo("#reservation_message");
 						clear_reservation_form();
 						$('#input_container_show_location').load("/tickets #input_container_show_location > *",function(){
@@ -151,7 +151,7 @@ class Page{
 							clicky.log('/tickets/submit#success','Reservation success','pageview');
 						}
 						catch(e){ /* console.log("Could not log view to Clicky. Error: " + e); */ }
-						$("#reservation_message").delay(5000).slideUp("slow");
+						//$("#reservation_message").delay(5000).slideUp("slow");
 					}
 					else{
 						$("#reservation_errors").empty();
@@ -264,12 +264,15 @@ class Page{
 				top: -24px;
 				display: none;
 			}
-			
 			#news_message{
 				background-color: #EEFFEE;
 				border: 2px solid #66CC66;
 				margin: 0 0 10px;
 				padding: 5px 10px;
+			}
+			.twitter-share-button{
+				margin-left: 10px;
+				vertical-align: middle;
 			}
 		</style>
 		<style type="text/css">
@@ -437,9 +440,14 @@ class Page{
 			else{
 				//Get the errors/messages to display
 				ob_start();
+				echo '<div id="reservation_errors" class="errors"></div>';
 				if($this->has_flag(0,"submit")){
 					if($this->reservation_status == true){
-						echo '<div id="reservation_message" class="visible_override"><strong>Reservation successful!</strong><br />Thank you for reservation! You will receive a confirmation email with further information.</div>';
+						/*echo '<div id="reservation_message" class="visible_override"><strong>Reservation successful!</strong><br />Thank you for reservation! You will receive a confirmation email with further information.</div>';
+						echo '<div id="reservation_errors" class="errors"></div>';*/
+						echo '<div id="reservation_message" class="visible_override"><strong>Reservation successful!</strong><p>Thank you for reservation! You will receive a confirmation email with further information.</p>
+				<p>Let your friends know and make them jealous! <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://floridaplayers.org/tickets" data-text="I just reserved my tickets for #FloridaPlayers Presents Spring Awakening!" data-via="florida_players" data-hashtags="fpspringawakening" data-size="large" data-count="none" data-dnt="true">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+\'://platform.twitter.com/widgets.js\';fjs.parentNode.insertBefore(js,fjs);}}(document, \'script\', \'twitter-wjs\');</script></p></div>';
 						echo '<div id="reservation_errors" class="errors"></div>';
 					}
 					else{
