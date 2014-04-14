@@ -361,7 +361,7 @@ elseif(isset($_GET['submit_new_show'])){
 	echo json_encode($return);
 }
 elseif(isset($_GET['get_event_list'])){
-	$event_list_query = "SELECT events.event_id, events.show_id, events.event_date, events.active, events.event_capacity, events.ticket_close, shows.show_name, (SELECT COALESCE(SUM(reservations.ticket_quantity),0) FROM reservations WHERE reservations.event_id=events.event_id) AS tickets_sold FROM events INNER JOIN shows ON events.show_id=shows.show_id WHERE events.archived='0' ORDER BY events.event_date";
+	$event_list_query = "SELECT events.event_id, events.show_id, events.event_date, events.active, events.archived, events.event_capacity, events.ticket_close, shows.show_name, (SELECT COALESCE(SUM(reservations.ticket_quantity),0) FROM reservations WHERE reservations.event_id=events.event_id) AS tickets_sold FROM events INNER JOIN shows ON events.show_id=shows.show_id WHERE events.archived='0' ORDER BY events.event_date";
 	$list_result = mysql_query($event_list_query,$sql);
 	if(!$list_result){
 		echo "Error! " . mysql_error();
@@ -379,6 +379,20 @@ elseif(isset($_GET['get_event_list'])){
 			</div>
 			<div class="event_controls">
 				<span><?php echo $row['tickets_sold']."/".$row['event_capacity']; ?></span>
+				<?php if($row['active'] == false){ ?>
+				<form class="event_form" action="/admin/showdata" method="post">
+					<input type="hidden" name="event_action" value="activate" />
+					<input type="hidden" name="event_id" value="<?php echo $row['event_id']; ?>" />
+					<input type="submit" value="Activate" />
+				</form>
+				<?php } ?>
+				<?php if($row['archived'] == false && $row['active'] == true){ ?>
+				<form class="event_form" action="/admin/showdata" method="post">
+					<input type="hidden" name="event_action" value="archive" />
+					<input type="hidden" name="event_id" value="<?php echo $row['event_id']; ?>" />
+					<input type="submit" value="Archive" />
+				</form>
+				<?php } ?>
 				<input type="button" value="Export" />
 				<input type="button" value="View" />
 				<input type="button" value="Edit" />
@@ -530,6 +544,45 @@ elseif(isset($_GET['submit_new_event'])){
 		$return["errors"] = $errors;
 	}
 	echo json_encode($return);
+}
+elseif(isset($_POST['event_action'])){
+	$action = $_POST['event_action'];
+	$event_id = $_POST['event_id'];
+	
+	try {
+		$sql = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD);
+		$sql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	}
+	catch(PDOException $e){
+		logError($_SERVER['SCRIPT_NAME'],__LINE__,"Could not select database (".DB_NAME.").",$e->getMessage(),time(),false);
+		array_push($errors,"Error connecting to database!");
+		$error = true;
+	}
+	
+	if($action == 'archive'){
+		$update = $sql->prepare('UPDATE events SET archived=:t WHERE event_id=:id');
+		$update->execute(array(':t'=>1,':id'=>$event_id));
+		
+		if($update->rowCount() == 1){
+			header('Location: /admin/events');
+		}
+		else{
+			echo 'Error!';
+			?> <a href="/admin/events">Return</a> <?php
+		}
+	}
+	elseif($action == 'activate'){
+		$update = $sql->prepare('UPDATE events SET active=:t WHERE event_id=:id');
+		$update->execute(array(':t'=>1,':id'=>$event_id));
+		
+		if($update->rowCount() == 1){
+			header('Location: /admin/events');
+		}
+		else{
+			echo 'Error!';
+			?> <a href="/admin/events">Return</a> <?php
+		}
+	}
 }
 mysql_close($sql);
 ?>

@@ -268,6 +268,9 @@ class Page{
 			select.error ~ .customStyleSelectBox{
 				border-color: #C00; background-color: #FEF;
 			}
+			.event_form{
+				display: inline-block;
+			}
 		</style>
 		<style type="text/css">
 			.custom-checkbox, .custom-radio { position: relative; margin-left: 0 !important; }
