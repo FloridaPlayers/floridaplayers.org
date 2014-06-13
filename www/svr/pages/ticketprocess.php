@@ -114,7 +114,7 @@ if(!$id_error){
 
 	$eventIdStatement = null;
 	try{
-		$eventIdStatement = $sql->prepare('SELECT events.event_date, events.event_capacity, events.ticket_close, (SELECT COALESCE(SUM(reservations.ticket_quantity),0) FROM reservations WHERE reservations.event_id=events.event_id) AS tickets_sold FROM events WHERE events.active=\'1\' AND events.archived=\'0\' AND events.event_id=:eid LIMIT 1');
+		$eventIdStatement = $sql->prepare('SELECT events.event_date, events.event_capacity, events.ticket_close, events.closed, (SELECT COALESCE(SUM(reservations.ticket_quantity),0) FROM reservations WHERE reservations.event_id=events.event_id) AS tickets_sold FROM events WHERE events.active=\'1\' AND events.archived=\'0\' AND events.event_id=:eid LIMIT 1');
 		$eventIdStatement->execute(array(':eid'=>$event_id));
 	}
 	catch(PDOException $e){
@@ -132,7 +132,7 @@ if(!$id_error){
 			
 			$row = $eventIdStatement->fetch();
 			$remaining = $row['event_capacity'] - $row['tickets_sold'];
-			$is_closed = (strtotime( $row['ticket_close'] ) < time());
+			$is_closed = (strtotime( $row['ticket_close'] ) < time()) || ($row['closed'] == true);
 			
 			$remaining_capacity = $remaining;
 			

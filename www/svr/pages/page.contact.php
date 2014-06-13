@@ -101,40 +101,31 @@ class Page{
 				<ul id="boardList">
 					<li>
 						<a name="ad"></a>
-						<img src="/res/images/exec-board/megan.jpg" />
-						<span class="name">Megan Wicks</span>
+						<img src="/res/images/exec-board/debbie.png" />
+						<span class="name">Debbie Maciel</span>
 						<span class="position">Artistic Director</span>
 						<span class="email"><?php echo $this->str_rot('artisticdirector@floridaplayers.org',17); ?></span>
-						<p>Megan is honored to be Artistic Director of Florida Players for the 2013-2014 school year. In the past two years, she has been involved with the executive board of FP as Secretary and Special Events coordinator and has acted in Children's Hour, Othello, Jesus Hopped the A Train, Iceland Play, Maple and Vine, and Mulier Ridiculum. She enjoys vegan food, the Insanity workout, and tea. Art is the portal to the soul, and Florida Player strives to provide opportunities to express yourself and your passion....contact me to get involved! 
-Contact for: General questions regarding Florida Players, Master Class</p>
+						<p>Debbie Maciel is humbled by and thrilled to be the Artistic Director of Florida Players’s 2014-2015 season! A Dance BFA candidate she has grown up in the School of Theatre & Dance halls as a 3 year member of Florida Players, Dance in a Suitcase & as a student ambassador for the College of Fine Arts. You may have seen in her in various dance shows as well as the play Blood Wedding, musical Guys & Dolls, and FP’s very own Mulier Ridiculum. Debbie loves making art, rapping alongside her Signs of Life family, and a really smart pun. She wants you to join her for a fun and compelling season. Contact with: any questions regarding Florida Players and Master Classes.</p>
 					</li>
 					<li>
 						<a name="aad"></a>
-						<img src="/res/images/exec-board/kevin.jpg" />
-						<span class="name">Kevin Roost</span>
+						<img src="/res/images/exec-board/ashley.png" />
+						<span class="name">Ashley Vonada</span>
 						<span class="position">Assistant Artistic Director</span>
 						<span class="email"><?php echo $this->str_rot('asst.artisticdirector@floridaplayers.org',17); ?></span>
-						<p>Kevin is beyond appreciative to be your Assistant Artistic Director and will be happy to serve you in any way possible. He has been seen in Floyd Collins, Shotgun Party, A New Brain, Too Much Light Makes the Baby Go Blind, and will be directing Change Provided as a part of the New Works Festival. If you really want him to like you, feed him Reese's, sing him Newsies, or bring him a puppy to play with. Thanks for playing! </p>
+						<p>Ashley is a second year student studying theater and chemical engineering, and she was last seen in Antigone in the spring. She is both thrilled and honored to be on the Executive board as the assistant artistic director. If you have any questions, need help with anything (literally anything at all), or just want to talk theater or nerdy things, feel free to contact her!</p>
 					</li>
 					<li>
 						<a name="pm"></a>
-						<img src="/res/images/exec-board/kimberly.jpg" />
-						<span class="name">Kimberly Yeoman</span>
+						<img src="/res/images/exec-board/chaz.png" />
+						<span class="name">Chaz May</span>
 						<span class="position">Production Manager</span>
 						<span class="email"><?php echo $this->str_rot('productionmanager@floridaplayers.org',17); ?></span>
-						<p>Kimberly Yeoman (BFA Scenic Design) is super excited to be on the Florida Players Board in her final year at UF. Previous Florida Players credits include Scenic Design for 'New Works Festival 2012' and 'Jeffrey,' and Props Design for 'Jesus Hopped the A Train.' 
-Kimberly is in charge of the shows that are produced within Florida Players, so please contact her with any show-related concerns or if you want to get involved with things like:
-Tech Crews
-Auditions
-Design
-Stage Management
-House Management
-Show Proposals
-Etc.</p>
+						<p>Chaz May (BFA Musical Theatre) is honored to be the Florida Players Production Manager in his sophomore year at UF. This is Chaz's second year on the executive board of Florida Players. Chaz is in charge of the shows that are produced within Florida Players, so please contact him with any show-related concerns or if you want to get involved with things like: Tech Crews, Auditions, Design, Stage Management, House Management, Show Proposals, Etc.</p>
 					</li>
 					<li>
 						<a name="tres"></a>
-						<img src="/res/images/exec-board/katina.jpg" />
+						<img src="/res/images/exec-board/katina.png" />
 						<span class="name">Katina White</span>
 						<span class="position">Treasurer</span>
 						<span class="email"><?php echo $this->str_rot('treasurer@floridaplayers.org',17); ?></span>
@@ -142,26 +133,27 @@ Etc.</p>
 					</li>
 					<li>
 						<a name="pub"></a>
-						<img src="/res/images/exec-board/lauren.jpg" />
-						<span class="name">Lauren Killer</span>
+						<img src="/res/images/exec-board/lauren.png" />
+						<span class="name">Lauren Elizabeth-Killer</span>
 						<span class="position">Publicist</span>
 						<span class="email"><?php echo $this->str_rot('publicist@floridaplayers.org',17); ?></span>
+						<p>Lauren Killer is a third year English and Theatre major, with a minor in mass communications. Essentially, she's crazy. This is her second year serving on the Florida Players executive board, and her third year working with this mah-velous organization. When not acting on the Florida Players stage or working behind the scenes, she is trying to be Tina Fey, doing a downward dog, or crafting her little heart out. Check out her live and online comedy show “Just Kidding,” coming to an interwebs near you.</p>
 					</li>
 					<li>
 						<a name="apub"></a>
-						<img src="/res/images/exec-board/christian.jpg" />
-						<span class="name">Christian Allison</span>
+						<img src="/res/images/exec-board/veronica.png" />
+						<span class="name">Veronica Michelle</span>
 						<span class="position">Assistant Publicist</span>
 						<span class="email"><?php echo $this->str_rot('asst.publicist@floridaplayers.org',17); ?></span>
-						<p>Christian is new to the executive board of Florida Players. In addition to graphic design, he enjoys theatre, music and more tea than can be considered healthy. As Assistant Publicist, he works primarily with the visual aspect of the production, creating posters, pamphlets, and anything else that can be used to promote the organization and its shows! Anyone with any interest in the Publicity team may contact him or the Senior Publicist, Lauren Killer.</p>
+						<p>Veronica is very excited to serve as Publicist for Florida Players during her last year at UF. She is studying both theatre and advertising, and has been a member of Florida Players since her freshman year. Spreading the word about this wonderful organization and all the opportunities it offers is a task she will do with pride. Contact her if interested in joining the Publicity team.</p>
 					</li>
 					<li>
 						<a name="sec"></a>
-						<img src="/res/images/exec-board/drew.jpg" />
-						<span class="name">Drew Bryan</span>
+						<img src="/res/images/exec-board/sam.png" />
+						<span class="name">Samantha Stone</span>
 						<span class="position">Secretary</span>
 						<span class="email"><?php echo $this->str_rot('secretary@floridaplayers.org',17); ?></span>
-						<p>Drew Bryan is a junior studying Theatre performance and Telecommunications. Her passions include acting, elephants, and good books</p>
+						<p>Sam is a sophomore Journalism/English double major and is beyond excited to be joining the Florida Players board! Sam loves acting, and you may have most recently seen her in the Florida Players production of Chatroom. In addition to theatre, she enjoys writing, reading, and generally goofing off. Contact her if you have any questions about points, becoming a member, or any other secretarial thing your heart desires.</p>
 					</li>
 					<!--<li>
 						<img src="" />
@@ -172,15 +164,15 @@ Etc.</p>
 					</li>-->
 					<li>
 						<a name="hist"></a>
-						<img src="/res/images/exec-board/bido.jpg" />
-						<span class="name">Anthony Bido</span>
+						<img src="/res/images/exec-board/mako.png" />
+						<span class="name">Mako Horikoshi</span>
 						<span class="position">Historian</span>
 						<span class="email"><?php echo $this->str_rot('historian@floridaplayers.org',17); ?></span>
-						<p>Anthony Bido is a junior BFA acting major. He's been a member of Florida Players for the past two years working mostly behind the scenes. He enjoys lights and shiny things. Contact him for archive information and photo calls.</p>
+						<p>Mako is a sophomore BA in theatre (she used to be a psych major, but then, she was like "nawwww, theatre"), and she is super excited to be the historian!! She loves Florida Players and theatre in general with a strong passion. She has previously acted in Florida Players' productions of Antigone and Mulier Ridiculam.</p>
 					</li>
 					<li>
 						<a name="web"></a>
-						<img src="/res/images/exec-board/webmaster.jpg" />
+						<img src="/res/images/exec-board/webmaster.png" />
 						<span class="name">Marcus Ball</span>
 						<span class="position">Webmaster</span> <!-- Grand Master of the Web -->
 						<span class="email"><?php echo $this->str_rot('webmaster@floridaplayers.org',17); ?></span>
@@ -208,7 +200,7 @@ Etc.</p>
 						───▐▀▒▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀
 						──▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀▀
 						
-						So webmaster
+						So webczar
 						-->
 
 					</li>

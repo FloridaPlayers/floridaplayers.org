@@ -431,7 +431,7 @@ class Page{
 		else{
 			mysql_select_db(DB_NAME, $this->sql);
 			
-			$showquery = "SELECT events.event_id, shows.show_name, events.event_date, events.event_capacity, events.ticket_close, (SELECT COALESCE(SUM(reservations.ticket_quantity),0) FROM reservations WHERE reservations.event_id=events.event_id) AS tickets_sold FROM events INNER JOIN shows ON events.show_id=shows.show_id WHERE events.active='1' AND events.archived='0' ORDER BY events.event_date";
+			$showquery = "SELECT events.event_id, shows.show_name, events.event_date, events.event_capacity, events.ticket_close, events.closed, (SELECT COALESCE(SUM(reservations.ticket_quantity),0) FROM reservations WHERE reservations.event_id=events.event_id) AS tickets_sold FROM events INNER JOIN shows ON events.show_id=shows.show_id WHERE events.active='1' AND events.archived='0' ORDER BY events.event_date";
 			$show_response = mysql_query($showquery,$this->sql);
 			if(!$show_response){
 				echo "Error retrieving available events!";
@@ -476,7 +476,7 @@ class Page{
 						$event_name = $row['show_name'];
 						$date = date( 'l, j F Y, \a\t g:i A',strtotime( $row['event_date'] ));
 						$remaining = $row['event_capacity'] - $row['tickets_sold'];
-						$is_closed = (strtotime( $row['ticket_close'] ) < time());
+						$is_closed = (strtotime( $row['ticket_close'] ) < time()) || ($row['closed'] == true);
 						$disabled = ($is_closed || $remaining <= 0)?"disabled=\"disabled\"":"";
 						
 						if(strtotime( $row['event_date'] ) <= time()) continue; //No need to display past shows
@@ -514,8 +514,9 @@ class Page{
 				<h1>Tickets</h1>
 				<article>
 					<section>
-						<?php if(time() < 1397520000){ ?>
-						<div id="news_message">Tickets for <em>Florida Players Presents Spring Awakening</em> will be made available Monday, April 14th at 8PM.</div>
+						
+						<?php if(time() < 1397768400 ){ ?>
+						<div id="news_message">We've added a few more tickets for <em>Florida Players Presents Spring Awakening</em>. Extra tickets for the Saturday and Sunday performances will be made available Thursday at 5:00pm.</div>
 						<?php } ?>
 						<p>Welcome to the online ticketing system for Florida Players. Tickets will become available for reservation approximately two weeks prior to opening night of each show.</p>
 						<p>Some shows may be sold out or closed. If a show is listed as closed, it means that the online signup period has ended but that there are still tickets available. If a show is sold out or closed, PLEASE join us at the theatre 30 minutes before the start of the show and our house manager will add you to the waiting list. For various reasons, some patrons are unable to attend despite reserving tickets. If you show up to a performance without a reservation, you more than likely will be able to see it. ALSO, check back the monday before opening week of the show, as many times more seats are able to be added at this date.</p>

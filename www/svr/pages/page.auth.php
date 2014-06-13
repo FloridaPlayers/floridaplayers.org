@@ -336,7 +336,7 @@ class Page{
 			$size_echo = "size=\"$size\"";
 		}
 		?>
-		<div id="input_container_<?php echo $name; ?>"><label for="<?php echo $id; ?>"><?php echo $label; if($required) echo " <em>*</em>"; ?></label> <input id="<?php echo $id; ?>" type="<?php echo $type; ?>" name="<?php echo $id; ?>" value="<?php echo $value; ?>" <?php echo $size_echo; ?> /></div>
+		<div id="input_container_<?php echo $name; ?>"><label for="<?php echo $id; ?>"><?php echo $label; if($required) echo " <em>*</em>"; ?></label> <input id="<?php echo $id; ?>" type="<?php echo $type; ?>" name="<?php echo $id; ?>" value="<?php echo htmlentities($value); ?>" <?php echo $size_echo; ?> /></div>
 	<?php
 	}
 }

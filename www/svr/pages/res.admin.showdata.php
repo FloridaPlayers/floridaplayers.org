@@ -361,7 +361,7 @@ elseif(isset($_GET['submit_new_show'])){
 	echo json_encode($return);
 }
 elseif(isset($_GET['get_event_list'])){
-	$event_list_query = "SELECT events.event_id, events.show_id, events.event_date, events.active, events.archived, events.event_capacity, events.ticket_close, shows.show_name, (SELECT COALESCE(SUM(reservations.ticket_quantity),0) FROM reservations WHERE reservations.event_id=events.event_id) AS tickets_sold FROM events INNER JOIN shows ON events.show_id=shows.show_id WHERE events.archived='0' ORDER BY events.event_date";
+	$event_list_query = "SELECT events.event_id, events.show_id, events.event_date, events.active, events.closed, events.archived, events.event_capacity, events.ticket_close, shows.show_name, (SELECT COALESCE(SUM(reservations.ticket_quantity),0) FROM reservations WHERE reservations.event_id=events.event_id) AS tickets_sold FROM events INNER JOIN shows ON events.show_id=shows.show_id WHERE events.archived='0' ORDER BY events.event_date";
 	$list_result = mysql_query($event_list_query,$sql);
 	if(!$list_result){
 		echo "Error! " . mysql_error();
@@ -384,6 +384,20 @@ elseif(isset($_GET['get_event_list'])){
 					<input type="hidden" name="event_action" value="activate" />
 					<input type="hidden" name="event_id" value="<?php echo $row['event_id']; ?>" />
 					<input type="submit" value="Activate" />
+				</form>
+				<?php } ?>
+				<?php if($row['closed'] == false && (strtotime( $row['ticket_close'] ) >= time())){ ?>
+				<form class="event_form" action="/admin/showdata" method="post">
+					<input type="hidden" name="event_action" value="close" />
+					<input type="hidden" name="event_id" value="<?php echo $row['event_id']; ?>" />
+					<input type="submit" value="Close" />
+				</form>
+				<?php } 
+				elseif($row['closed'] == true && (strtotime( $row['ticket_close'] ) >= time())){ ?>
+				<form class="event_form" action="/admin/showdata" method="post">
+					<input type="hidden" name="event_action" value="open" />
+					<input type="hidden" name="event_id" value="<?php echo $row['event_id']; ?>" />
+					<input type="submit" value="Open" />
 				</form>
 				<?php } ?>
 				<?php if($row['archived'] == false && $row['active'] == true){ ?>
@@ -579,6 +593,30 @@ elseif(isset($_POST['event_action'])){
 	elseif($action == 'activate'){
 		$update = $sql->prepare('UPDATE events SET active=:t WHERE event_id=:id');
 		$update->execute(array(':t'=>1,':id'=>$event_id));
+		
+		if($update->rowCount() == 1){
+			header('Location: /admin/events');
+		}
+		else{
+			echo 'Error!';
+			?> <a href="/admin/events">Return</a> <?php
+		}
+	}
+	elseif($action == 'close'){
+		$update = $sql->prepare('UPDATE events SET closed=:t WHERE event_id=:id');
+		$update->execute(array(':t'=>1,':id'=>$event_id));
+		
+		if($update->rowCount() == 1){
+			header('Location: /admin/events');
+		}
+		else{
+			echo 'Error!';
+			?> <a href="/admin/events">Return</a> <?php
+		}
+	}
+	elseif($action == 'open'){
+		$update = $sql->prepare('UPDATE events SET closed=:t WHERE event_id=:id');
+		$update->execute(array(':t'=>0,':id'=>$event_id));
 		
 		if($update->rowCount() == 1){
 			header('Location: /admin/events');
