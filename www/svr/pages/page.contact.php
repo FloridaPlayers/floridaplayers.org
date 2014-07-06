@@ -140,11 +140,11 @@ class Page{
 						<p>Veronica is very excited to serve as Publicist for Florida Players during her last year at UF. She is studying both theatre and advertising, and has been a member of Florida Players since her freshman year. Spreading the word about this wonderful organization and all the opportunities it offers is a task she will do with pride. Contact her if interested in joining the Publicity team.</p>
 					</li>
 					<li>
-						<a name="apub"></a>
+						<a name="ec"></a>
 						<img src="/res/images/exec-board/lauren.png" />
 						<span class="name">Lauren Elizabeth-Killer</span>
-						<span class="position">Assistant Publicist</span>
-						<span class="email"><?php echo $this->str_rot('asst.publicist@floridaplayers.org',17); ?></span>
+						<span class="position">Special Events Coordinator</span>
+						<span class="email"><?php echo $this->str_rot('specialevents@floridaplayers.org',17); ?></span>
 						<p>Lauren Killer is a third year English and Theatre major, with a minor in mass communications. Essentially, she's crazy. This is her second year serving on the Florida Players executive board, and her third year working with this mah-velous organization. When not acting on the Florida Players stage or working behind the scenes, she is trying to be Tina Fey, doing a downward dog, or crafting her little heart out. Check out her live and online comedy show “Just Kidding,” coming to an interwebs near you.</p>
 					</li>
 					<li>
@@ -155,13 +155,6 @@ class Page{
 						<span class="email"><?php echo $this->str_rot('secretary@floridaplayers.org',17); ?></span>
 						<p>Sam is a sophomore Journalism/English double major and is beyond excited to be joining the Florida Players board! Sam loves acting, and you may have most recently seen her in the Florida Players production of Chatroom. In addition to theatre, she enjoys writing, reading, and generally goofing off. Contact her if you have any questions about points, becoming a member, or any other secretarial thing your heart desires.</p>
 					</li>
-					<!--<li>
-						<img src="" />
-						<span class="name"></span>
-						<span class="position">Special Events Coordinator</span>
-						<span class="email"><?php echo $this->str_rot('specialevents@floridaplayers.org',17); ?></span>
-						<p></p>
-					</li>-->
 					<li>
 						<a name="hist"></a>
 						<img src="/res/images/exec-board/mako.png" />
