@@ -6,6 +6,7 @@ class Page{
 	var $usr;
 	var $reservation_status = null;
 	var $reservation_details = array();
+	var $reservation_show_name = "";
 	function Page($request){
 		$this->request = $request;
 		//$this->usr = new User();
@@ -130,7 +131,7 @@ class Page{
 				success: function(data, textStatus, jqXHR) {
 					var data_return = $.parseJSON(data);
 					if(data_return.status == "success"){
-						$("#reservation_message").html('<strong>Reservation successful!</strong><p>Thank you for reservation! You will receive a confirmation email with further information.</p><p>Let your friends know and make them jealous! <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://floridaplayers.org/tickets" data-text="I just reserved my tickets for #FloridaPlayers Presents Spring Awakening!" data-via="florida_players" data-hashtags="fpspringawakening" data-size="large" data-count="none" data-dnt="true">Tweet</a><scr'+'ipt>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+\'://platform.twitter.com/widgets.js\';fjs.parentNode.insertBefore(js,fjs);}}(document, \'script\', \'twitter-wjs\');</scr'+'ipt>').show();
+						$("#reservation_message").html('<strong>Reservation successful!</strong><p>Thank you for reservation! You will receive a confirmation email with further information.</p><p>Let your friends know and make them jealous! <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://floridaplayers.org/tickets" data-text="I just reserved my tickets for #FloridaPlayers Presents '+data_return.show_name+'!" data-via="florida_players" data-hashtags="'+data_return.show_hashtag+'" data-size="large" data-count="none" data-dnt="true">Tweet</a><scr'+'ipt>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+\'://platform.twitter.com/widgets.js\';fjs.parentNode.insertBefore(js,fjs);}}(document, \'script\', \'twitter-wjs\');</scr'+'ipt>').show();
 						$.scrollTo("#reservation_message");
 						clear_reservation_form();
 						$('#input_container_show_location').load("/tickets #input_container_show_location > *",function(){
@@ -389,7 +390,7 @@ class Page{
 	function preloadPage(){
 		if($this->has_flag(0,"submit")){
 			require "ticketprocess.php";
-			
+			$this->reservation_show_name = $this->getShowNameFromEventId($_POST['input_selected_event']);
 			if(isset($_GET['ajax_request'])){
 				$return = array();
 				if($success){
@@ -402,6 +403,8 @@ class Page{
 					$return["status"] = "error";
 					$return["errors"] = $errors;
 				}
+				$return['show_name'] = $this->reservation_show_name;
+				$return['show_hashtag'] = $this->makeHashtag($this->reservation_show_name);
 				echo json_encode($return);
 				return false;
 			}
@@ -446,7 +449,7 @@ class Page{
 						/*echo '<div id="reservation_message" class="visible_override"><strong>Reservation successful!</strong><br />Thank you for reservation! You will receive a confirmation email with further information.</div>';
 						echo '<div id="reservation_errors" class="errors"></div>';*/
 						echo '<div id="reservation_message" class="visible_override"><strong>Reservation successful!</strong><p>Thank you for reservation! You will receive a confirmation email with further information.</p>
-				<p>Let your friends know and make them jealous! <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://floridaplayers.org/tickets" data-text="I just reserved my tickets for #FloridaPlayers Presents Spring Awakening!" data-via="florida_players" data-hashtags="fpspringawakening" data-size="large" data-count="none" data-dnt="true">Tweet</a>
+				<p>Let your friends know and make them jealous! <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://floridaplayers.org/tickets" data-text="I just reserved my tickets for #FloridaPlayers Presents '.$this->reservation_show_name.'!" data-via="florida_players" data-hashtags="'.$this->makeHashtag($this->reservation_show_name).'" data-size="large" data-count="none" data-dnt="true">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+\'://platform.twitter.com/widgets.js\';fjs.parentNode.insertBefore(js,fjs);}}(document, \'script\', \'twitter-wjs\');</script></p></div>';
 						echo '<div id="reservation_errors" class="errors"></div>';
 					}
@@ -655,6 +658,32 @@ class Page{
 			}
 		}
 		return $s;
+	}
+	
+	function getShowNameFromEventId($eventId){
+		if(!isset($_POST['input_selected_event'])){ 
+			return false;
+		}
+		else $event_id = cut($eventId,11);
+		if(preg_match("/[^0-9]/",$event_id) && $event_id != ""){
+			return false;
+		}
+		
+		$sql = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD);
+		$sql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$statement = $sql->prepare('SELECT DISTINCT shows.show_name FROM shows INNER JOIN events ON events.show_id=shows.show_id WHERE events.event_id=:eid');
+		$statement->execute(array(':eid'=>$eventId));
+		if(($result = $statement->fetch(PDO::FETCH_ASSOC)) !== FALSE){
+			$show_name = $result['show_name'];
+			return $show_name;
+		}
+		return false;
+	}
+	
+	function makeHashtag($showName){
+		$name = str_replace(' ','',$showName);
+		$hashtag = strtolower('fp'.$name);
+		return $hashtag;
 	}
 }
 ?>
