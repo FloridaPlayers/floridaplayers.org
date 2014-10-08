@@ -31,6 +31,9 @@ class Page{
 			tr.checkedIn{
 				background: #9FFCAD;
 			}
+			td.edit{
+				width: 110px;
+			}
 		</style>
 		<script src="/res/scripts/jquery.min.js" type="text/javascript"></script>
 		<script type="text/javascript">
@@ -58,6 +61,34 @@ class Page{
 					}
 				});
 			});
+			<?php if($this->usr->is_logged_in() && $this->usr->get_user_info("permissions") >= 1){ ?>
+			$('.vip_edit').click(function(){
+				//var checked = $(this).is(':checked');
+				resEditButton = $(this);
+				resId = $(this).attr('data-reservation-id');
+				resRow = $(this).parents('tr');
+				resVipDisplay = $('.vip',resRow);
+				resTicketQuantity = $('.quantity',resRow).text();
+				resIsVip = ($(this).attr('data-is-vip') == 'true');
+				//var checkbox = $(this);
+				$.ajax({
+					url:'/admin/ticketlist/editvip',
+					data:'reservation_id='+resId+'&make_vip='+((!resIsVip)?'true':'false'),
+					dataType:'json',
+					success:function(data,status,jqxhr){
+						if(data.status == 'success'){
+							resIsVip = !resIsVip; 
+							resEditButton.prop('value',(resIsVip)?resEditButton.attr('data-remove-vip'):resEditButton.attr('data-add-vip'));
+							resEditButton.attr('data-is-vip',(resIsVip)?'true':'false');
+							resVipDisplay.html((resIsVip)?resTicketQuantity:'');
+						}
+						else{
+							alert(data.message);
+						}
+					}
+				});
+			});
+			<?php } ?>
 		});
 		</script>
 	<?php
@@ -165,9 +196,37 @@ class Page{
 				?>
 				<div style="text-align:center"><strong><?php echo "Ticket RSVP for ".$this->eventData['show_name']." on ".$dateString; ?></strong><br /><a href="/admin/ticketlist/download?event=<?php echo $this->eventData['event_id']; ?>">Download spreadsheet</a></div>
 				<table width="100%">
-					<thead><tr><th>&#9745;</th><th>Name</th><th>Quantity</th><th>VIP</th></tr></thead>
+					<thead>
+						<tr>
+							<th>&#9745;</th>
+							<th>Name</th>
+							<th>Quantity</th>
+							<th>VIP</th>
+							<?php if($this->usr->is_logged_in() && $this->usr->get_user_info("permissions") >= 1){ ?> 
+								<th>Edit</th>
+							<?php } ?>
+						</tr>
+					</thead>
 				<?php while ($row = $this->reservationStmt->fetch()) { ?>
-					<tr <?php if($row['checked_in']){echo 'class="checkedIn"'; }?>><td><input type="checkbox" class="reservation_checkin" value="<?php echo $row['reservation_id']; ?>" <?php if($row['checked_in']){ echo 'checked="checked"'; } ?> /></td><td><?php echo ucwords($row['fname']." ".$row['lname']); ?></td><td><?php echo $row['quantity']; ?></td><td><?php if($row['vip'] > 0){ echo $row['vip']; } ?></td></tr>
+					<tr <?php if($row['checked_in']){echo 'class="checkedIn"'; }?>>
+						<td>
+							<input type="checkbox" class="reservation_checkin" value="<?php echo $row['reservation_id']; ?>" <?php if($row['checked_in']){ echo 'checked="checked"'; } ?> />
+						</td>
+						<td>
+							<?php echo ucwords($row['fname']." ".$row['lname']); ?>
+						</td>
+						<td class="quantity">
+							<?php echo $row['quantity']; ?>
+						</td>
+						<td class="vip">
+							<?php if($row['vip'] > 0){ echo $row['vip']; } ?>
+						</td>
+						<?php if($this->usr->is_logged_in() && $this->usr->get_user_info("permissions") >= 1){ ?> 
+						<td class="edit">
+							<input type="button" class="vip_edit" data-reservation-id="<?php echo $row['reservation_id']; ?>" data-add-vip="Make VIP" data-remove-vip="Remove VIP" data-is-vip="<?php echo (($row['vip'] > 0)?'true':'false'); ?>" value="<?php echo (($row['vip'] > 0)?'Remove VIP':'Make VIP'); ?>" />
+						</td>
+						<?php } ?>
+					</tr>
 				<?php } ?>
 				</table>
 			</section>

@@ -46,10 +46,10 @@ class Page{
 						timeFormat: 'h:mm tt',
 						maxDate: null,
 						onSelect: function(){
-							var selected_date = $(this).datetimepicker('getDate');
+							/*var selected_date = $(this).datetimepicker('getDate');
 							if(selected_date != null){
 								$('#input_close_date').datetimepicker('option','maxDate',new Date(selected_date.getTime()));
-							}
+							}*/
 						},
 						onClose: function(dateText, inst) {
 							var event_close_box = $('#input_close_date');
@@ -64,6 +64,7 @@ class Page{
 					$('#input_close_date').datetimepicker({
 						ampm: true,
 						timeFormat: 'h:mm tt',
+						maxDate: null,
 						onClose: function(dateText, inst) {
 							var event_date_box = $('#input_event_date');
 							if (event_date_box.val() != '') {
