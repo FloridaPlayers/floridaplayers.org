@@ -1,1 +1,4 @@
 /www/svr/cache/
+phplist
+Thumbs.db
+.DS_Store
