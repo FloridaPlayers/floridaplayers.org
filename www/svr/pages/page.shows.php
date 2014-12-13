@@ -94,6 +94,56 @@ class Page{
 			global $THEATER_LOCATIONS;
 			$season_info = get_current_season();
 			
+			$current_season_ids = array();
+			
+			$upcoming_show_query = "SELECT shows.show_id, shows.show_name, shows.show_abbr, shows.show_term, shows.show_year, shows.byline, shows.location, shows.image, e.close FROM shows LEFT JOIN (SELECT show_id, MAX(ticket_close) AS close FROM events WHERE active='1' GROUP BY show_id) AS e ON shows.show_id = e.show_id WHERE show_term='{$season_info['next']['term']}' AND show_year='{$season_info['next']['year']}'";
+			try{
+				$upcoming_show_response = $this->sql->query($upcoming_show_query);
+			}
+			catch(PDOException $e){
+				die("Error fetching show list! " . $e->getMessage());
+			}
+			
+			
+			ob_start();
+			if($upcoming_show_response->rowCount()  > 0){	
+			?>
+				<section class="full nopad">
+					<h1>Upcoming season</h1>
+					<div class="upcoming_season_container">
+					<?php
+					while($show = $upcoming_show_response->fetch(PDO::FETCH_ASSOC)){ 
+						array_push($current_season_ids,$show['show_id']);
+						?>
+						<div class="show_item" id="<?php echo $show['show_abbr']; ?>_show_item">
+							<div class="show_item_image_container show_item_inner">
+								<img src="<?php if(isset($show['image']) && ($show['image'] != null || $show['image'] != "")){ echo $show['image']; }else{echo NO_SHOW_IMAGE_DEFAULT;} ?>" alt="<?php echo $show['show_name']; ?>" class="show_item_picture" />
+							</div>
+							<div class="details">
+								<h3 class="show_item_name"><a href="<?php echo "/show/{$show['show_abbr']}"; ?>"><?php echo $show['show_name']; ?></a></h3>
+								<div><?php echo $this->utf8_urldecode($show['byline']); ?></div>
+								<div><?php if(array_key_exists($show['location'],$THEATER_LOCATIONS)){ $data = $THEATER_LOCATIONS[$show['location']]; echo "Located at the <a href=\"/map/{$data['short']}\">{$data['name']}</a>"; } ?></div>
+							</div>
+							<aside>
+								<?php
+								$close = $show['close'];
+								if(strtotime($close) > time()){
+									echo "<a href=\"/tickets\">Get tickets</a>";
+								}
+								?>
+							</aside>
+							<div class="clear"></div>
+						</div>
+					<?php }
+					?>
+					</div>
+				</section>
+			<?php 
+			}
+			$upcoming_season=ob_get_contents();
+			ob_clean();
+			//End: get the current season
+			
 			
 			//Get the current season
 			//$show_query = "SELECT show_id,show_name,show_abbr,byline,location,image FROM shows WHERE show_term='{$season_info[current][term]}' AND show_year='{$season_info[current][year]}'";
@@ -110,7 +160,6 @@ class Page{
 				die("Error fetching show list! " . $e->getMessage());
 			}
 			
-			$current_season_ids = array();
 			ob_start();
 			if($show_response->rowCount()  > 0){	
 			?>
@@ -199,6 +248,7 @@ class Page{
 			$previous_season=ob_get_contents();
 			ob_clean();
 			
+			if($upcoming_season !== FALSE) echo $upcoming_season;
 			if($current_season !== FALSE) echo $current_season;
 			if($previous_season !== FALSE) echo $previous_season;
 		}
