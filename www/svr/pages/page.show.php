@@ -134,7 +134,7 @@ class Page{
 			header("Location: /shows");
 			return false;
 		}
-		$requested_show = substr(strtolower($this->get_input_at(0)),0,10);
+		$requested_show = substr(strtolower($this->get_input_at(0)),0,20);
 		if($requested_show == null || $requested_show == "" || preg_match("/[^\w_-]/",$requested_show)){
 			header("Location: /shows");
 			return false;

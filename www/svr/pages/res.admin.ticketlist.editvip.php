@@ -3,12 +3,12 @@ try{
 	$sql = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD);
 }
 catch(PDOException $e){
-	logError("res.admin.ticketlist.checkin.php",__LINE__,"Error connecting to database!",$e->getMessage(),time(),false);
+	logError("res.admin.ticketlist.editvip.php",__LINE__,"Error connecting to database!",$e->getMessage(),time(),false);
 	return false;
 }
 	
 
-if(!isset($_GET['reservation_id']) || !isset($_GET['checked_in'])){
+if(!isset($_GET['reservation_id']) || !isset($_GET['make_vip'])){
 	echo json_encode(array('status'=>'fail','message'=>'Invalid request'));
 	return;
 }
@@ -19,28 +19,28 @@ if($reservationId == null || $reservationId == "" || preg_match("/[^\d{1,10}]/",
 	return;
 }
 
-$checkedInStatus = $_GET['checked_in'];
-if($checkedInStatus !== 'true' && $checkedInStatus !== 'false'){
+$makeVip = $_GET['make_vip'];
+if($makeVip !== 'true' && $makeVip !== 'false'){
 	echo json_encode(array('status'=>'fail','message'=>'Invalid request'));
 	return;
 }
 
-if($checkedInStatus === 'true'){
-	$checkedInStatus = 1;
+if($makeVip === 'true'){
+	$makeVip = 1;
 }
 else{
-	$checkedInStatus = 0;
+	$makeVip = 0;
 }
 
 try{
-	$infoStmt = $sql->prepare('UPDATE reservations SET checked_in=:checked WHERE reservation_id=:rid');
-	$infoStmt->bindParam(':checked',$checkedInStatus,PDO::PARAM_INT);
+	$infoStmt = $sql->prepare('UPDATE reservations SET vip=:vip WHERE reservation_id=:rid');
+	$infoStmt->bindParam(':vip',$makeVip,PDO::PARAM_INT);
 	$infoStmt->bindParam(':rid',$reservationId,PDO::PARAM_INT);
 	$infoStmt->execute();
-	echo json_encode(array('status'=>'success','message'=>'Woot! ' . "$checkedInStatus $reservationId"));
+	echo json_encode(array('status'=>'success','message'=>'Woot! ' . "$makeVip$reservationId"));
 }
 catch(PDOException $e){
-	logError("res.admin.ticketlist.checkin.php",__LINE__,"Error retrieving available events!",$e->getMessage(),time(),false);
+	logError("res.admin.ticketlist.editvip.php",__LINE__,"Error retrieving available events!",$e->getMessage(),time(),false);
 	echo json_encode(array('status'=>'fail','message'=>'Something went wrong!'));
 	return;
 }
