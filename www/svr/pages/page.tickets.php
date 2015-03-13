@@ -579,10 +579,10 @@ class Page{
 									$this->text_input("Email address","email_address",true);
 								}?>
 							</fieldset>
-							<fieldset>
+							<!--<fieldset>
 								<legend>VIP Reservations</legend>
 								<p>Florida Players is now offering VIP reservations! For $3 for a single ticket, or $5 for two tickets, a VIP reservation will guarantee seating in the first three rows. To upgrade your tickets, complete your reservation, then email <span class="email"><?php echo $this->str_rot('reservations@floridaplayers.org?subject=VIP Reservation',17); ?></span> with your name and the email used for the reservation. </p>
-							</fieldset>
+							</fieldset>-->
 							<input type="submit" value="Submit reservation" id="input_submit_reservation" />
 							<div id="loadingAnimatin" class="loading windows8">
 								<div class="wBall" id="wBall_1">
