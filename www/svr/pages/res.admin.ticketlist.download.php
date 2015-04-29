@@ -1,4 +1,8 @@
 <?php
+function quote($str){
+	return '"'.$str.'"';
+}
+
 try{
 	$sql = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD);
 }
@@ -22,7 +26,7 @@ try{
 	$infoStmt->execute(array(':eid'=>$requestedShow));
 	
 }
-catch(PDOException $e){
+catch(PDOException $e){ 
 	logError("res.admin.ticketlist.download.php",__LINE__,"Error retrieving available events!",$e->getMessage(),time(),false);
 	return false;
 }
@@ -60,7 +64,8 @@ if($reservationsStmt->rowCount() > 0){
 	$data = "First Name" . ',' . "Last Name" . ',' . "Ticket Amount" . ',VIP,' . "Email Address" . $cr;
 
 	while ($row = $reservationsStmt->fetch()) {
-		$data .= ucwords($row['fname']) . ',' . ucwords($row['lname']) . ',' . $row['quantity'] . ',' . (($row['vip'] > 0)?$row['vip']:'') . ',' . $row['email'] . $cr;
+		//$data .= ucwords($row['fname']) . ',' . ucwords($row['lname']) . ',' . $row['quantity'] . ',' . (($row['vip'] > 0)?$row['vip']:'') . ',' . $row['email'] . $cr;
+		$data .= implode(',',array(quote(ucwords($row['fname'])),quote(ucwords($row['lname'])),$row['quantity'],(($row['vip'] > 0)?$row['vip']:''),quote($row['email']))) . $cr;
 	}
 	unset($sql,$row,$result,$usertable);
 	echo $data;

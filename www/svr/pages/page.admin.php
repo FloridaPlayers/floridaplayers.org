@@ -80,6 +80,7 @@ class Page{
 					<li><a href="/admin/events">Manage Events</a></li>
 					<li><a href="/admin/photos">Upload photos</a></li>
 					<li><a href="/admin/ticketlist/manage">Get ticket list links</a></li>
+					<li><a href="/admin/addreservation">Insert new reservation</a></li>
 				</ul>
 				<div class="clear"></div>
 			</section>
