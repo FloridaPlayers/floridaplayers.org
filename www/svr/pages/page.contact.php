@@ -121,12 +121,11 @@ class Page{
                     </li>
 					<li>
 						<a name="pm"></a>
-						<?php //<img src="/res/images/exec-board/chaz.png" /> ?>
+						<img src="/res/images/exec-board/lauren-kennedy.png" />
 						<span class="name">Lauren Kennedy</span>
 						<span class="position">Production Manager</span>
 						<span class="email"><?php echo $this->str_rot('productionmanager@floridaplayers.org',17); ?></span>
-						<?php //<p>Chaz May (BFA Musical Theatre) is honored to be the Florida Players Production Manager in his sophomore year at UF. This is Chaz's second year on the executive board of Florida Players. Chaz is in charge of the shows that are produced within Florida Players, so please contact him with any show-related concerns or if you want to get involved with things like: Tech Crews, Auditions, Design, Stage Management, House Management, Show Proposals, Etc.</p>
-                        ?>
+						<p>Lauren Kennedy is elated to serve as Production Manager for Florida Players. This is her second year on the executive board and her third year at UF. Lauren is majoring in Tourism, Event, and Recreation Management, and yes, that IS a mouthful. In her spare time, Lauren bakes too much, attempts to learn to penny board inside her apartment, and hangs out in the SoTD hallway. Contact her if you have questions regarding stage management, design, tech crew, house management, show proposals, or getting involved in a production in any way.</p>
                     </li>
 					<li>
 						<a name="tres"></a>
