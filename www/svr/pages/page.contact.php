@@ -142,8 +142,7 @@ class Page{
 						<span class="name">Veronica Cinibulk</span>
 						<span class="position">Publicist</span>
 						<span class="email"><?php echo $this->str_rot('publicist@floridaplayers.org',17); ?></span>
-						<?php //<p>Veronica is very excited to serve as Publicist for Florida Players during her last year at UF. She is studying both theatre and advertising, and has been a member of Florida Players since her freshman year. Spreading the word about this wonderful organization and all the opportunities it offers is a task she will do with pride. Contact her if interested in joining the Publicity team.</p>
-                        ?>
+						<p>Veronica Cinibulk is a third-year Psychology major and Spanish minor who fell in love with theatre a long, long time ago and still keeps coming back for more. In her free time she writes a lot, reads a lot, tries to learn new languages, and travels. Contact her with any questions regarding the publicity team, poster and program designs, other publicity questions, or just to talk!</p>
                     </li>
 					<li>
 						<a name="ec"></a>
