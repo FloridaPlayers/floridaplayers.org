@@ -155,12 +155,11 @@ class Page{
                     </li>
 					<li>
 						<a name="sec"></a>
-						<?php //<img src="/res/images/exec-board/sam.png" /> ?>
+						<img src="/res/images/exec-board/summer.png" />
 						<span class="name">Summer Pliskow</span>
 						<span class="position">Secretary</span>
 						<span class="email"><?php echo $this->str_rot('secretary@floridaplayers.org',17); ?></span>
-						<?php //<p>Sam is a sophomore Journalism/English double major and is beyond excited to be joining the Florida Players board! Sam loves acting, and you may have most recently seen her in the Florida Players production of Chatroom. In addition to theatre, she enjoys writing, reading, and generally goofing off. Contact her if you have any questions about points, becoming a member, or any other secretarial thing your heart desires.</p>
-                        ?>
+						<p>Summer is a sophomore BFA Acting major and is beyond excited to be your secretary! She has loved being an active member and performer in Florida Players and cannot wait to bring that enthusiasm to the Executive Board. She will be sending you all the lovely emails about important dates, reminders and meeting info so be sure to look out for them! However, she also loves to get emails as well, so feel free to contact her with any questions you may have regarding the point system, meeting minutes, the FP bulletin board or if you wish to be on the Florida Players mailing list! </p>
                     </li>
 					<li>
 						<a name="hist"></a>
@@ -170,13 +169,21 @@ class Page{
 						<span class="email"><?php echo $this->str_rot('historian@floridaplayers.org',17); ?></span>
 						<p>Mako is a sophomore BA in theatre (she used to be a psych major, but then, she was like "nawwww, theatre"), and she is super excited to be the historian!! She loves Florida Players and theatre in general with a strong passion. She has previously acted in Florida Players' productions of Antigone and Mulier Ridiculam.</p>
 					</li>
+                    <li>
+                        <a name="outreach"></a>
+                        <img src="/res/images/exec-board/kelsa.png" />
+                        <span class="name">Kelsa Kuchera</span>
+                        <span class="position">Outreach Liaison</span>
+                        <span class="email"><?php echo $this->str_rot('outreach@floridaplayers.org',17); ?></span> 
+                        <p>Kelsa Kuchera is hyped to be the Florida Players' first Gator Growl, Homecoming and outreach Liaison!  A Sophomore at UF, Kelsa is double majoring in English and Theatre and minoring in the Theories and Politics of Sexuality.  In her vast amounts of free time she enjoys drawing, riding her bike, and watering her succulents.  Contact her if you are interested in skits, getting involved with homecoming, or just want to let the gator growl!</p>
+                    </li>
 					<li>
 						<a name="web"></a>
 						<img src="/res/images/exec-board/webmaster.png" />
 						<span class="name">Marcus Ball</span>
 						<span class="position">Webmaster</span> <!-- Grand Master of the Web -->
 						<span class="email"><?php echo $this->str_rot('webmaster@floridaplayers.org',17); ?></span>
-						<p>Marcus is a junior Computer Science major. He's been with Florida Players since his freshman year and is so happy to have the opportunity to work with such a great organization. Contact him if something has gone horribly wrong with the website or if you want to talk about geek stuff. </p>
+						<p>Marcus is a 5th Computer Science major. He's been with Florida Players since his freshman year and is so happy to have the opportunity to work with such a great organization. Contact him if something has gone horribly wrong with the website or if you want to talk about geek stuff. </p>
 						<!--
 						Wow. Such professional.
 						
