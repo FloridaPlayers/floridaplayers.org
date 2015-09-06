@@ -157,7 +157,7 @@ class Page{
 			return;
 		}
 		
-		$cast_query = "SELECT person_name AS name, role, type AS position FROM cast_and_crew WHERE show_id='{$this->show_data['show_id']}' ORDER BY type, position;";
+		$cast_query = "SELECT person_name AS name, role, type, position FROM cast_and_crew WHERE show_id='{$this->show_data['show_id']}' ORDER BY type, position ASC;";
 		
 		try{
 			$cast_response = $this->sql->query($cast_query);
@@ -250,7 +250,7 @@ class Page{
 				$is_cast = false;
 				$new = true;
 				while($crew_member = $this->cast_data->fetch(PDO::FETCH_ASSOC)){
-					if($crew_member['position'] == 'cast' && $new){
+					if($crew_member['type'] == 'cast' && $new){
 						$is_cast = true;
 						$new = false; ?>
 						<section class="cast cnc">
@@ -258,7 +258,7 @@ class Page{
 							<ul>
 						<?php
 					}
-					if($crew_member['position'] == 'design' && ($is_cast || $new)){
+					if($crew_member['type'] == 'design' && ($is_cast || $new)){
 						if(!$new){ ?>
 								</ul>
 								<div class="clear"></div>
