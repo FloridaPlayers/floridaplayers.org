@@ -1,4 +1,5 @@
 <?php
+require_once "authentication.php";
 require_once "emailvalidate.php";
 require_once('./svr/res/swiftmailer/lib/swift_required.php');
 
@@ -81,6 +82,8 @@ function sendConfirmationMail($email,$name,$quantity,$event_id){
 $errors = array();
 $error = false;
 $success = false;
+$warnings = array();
+$admin_override = false;
 
 try {
 	$sql = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD);
@@ -91,6 +94,19 @@ catch(PDOException $e){
 	array_push($errors,"Error connecting to database!");
 	$error = true;
 }
+
+/**********************************************/
+/** Code to enable admin override             */
+/**********************************************/
+$user = $GLOBALS['USER'];
+$user->get_info();
+
+if(isset($_REQUEST['admin_override']) && $user->is_logged_in() && $user->get_user_info('permissions') !== false && $user->get_user_info('permissions') >= 1){
+	$admin_override = true;
+}
+/**********************************************/
+/** End of Code to enable admin override      */
+/**********************************************/
 
 
 $remaing_capacity = 0;
@@ -136,20 +152,48 @@ if(!$id_error){
 			
 			$remaining_capacity = $remaining;
 			
-			if(strtotime( $row['event_date'] ) <= time()){
-				array_push($errors,"It's too late to register for that.");
-				$error = true;
-				$valid_event = false;
+			
+			
+			/**********************************************/
+			/** Code to enable admin override             */
+			/**********************************************/
+			if($admin_override){
+				if(strtotime( $row['event_date'] ) <= time()){
+					array_push($warnings,"It's too late to register for that.");
+					//$error = true;
+					//$valid_event = false;
+				}
+				elseif($remaining <= 0){
+					array_push($warnings,"The selected event is sold out.");
+					//$error = true;
+					//$valid_event = false;
+				}
+				elseif($is_closed){
+					array_push($warnings,"Reservations for this event have been closed.");
+					//$error = true;
+					//$valid_event = false;
+				}
 			}
-			elseif($remaining <= 0){
-				array_push($errors,"The selected event is sold out.");
-				$error = true;
-				$valid_event = false;
-			}
-			elseif($is_closed){
-				array_push($errors,"Reservations for this event have been closed.");
-				$error = true;
-				$valid_event = false;
+			/**********************************************/
+			/** End of Code to enable admin override      */
+			/**********************************************/
+			else{
+			
+				if(strtotime( $row['event_date'] ) <= time()){
+					array_push($errors,"It's too late to register for that.");
+					$error = true;
+					$valid_event = false;
+				}
+				elseif($remaining <= 0){
+					array_push($errors,"The selected event is sold out.");
+					$error = true;
+					$valid_event = false;
+				}
+				elseif($is_closed){
+					array_push($errors,"Reservations for this event have been closed.");
+					$error = true;
+					$valid_event = false;
+				}
 			}
 		}
 	}
@@ -164,12 +208,24 @@ elseif(!preg_match("/\d{1,2}/",$ticket_quantity) || $ticket_quantity < 1 || $tic
 	$error = true;
 }
 elseif($valid_event && $remaining_capacity < $ticket_quantity){
-	array_push($errors,"There are not enough tickets remaining! You requested $ticket_quantity, but there ".(($remaining_capacity == 1)?"is":"are")." only $remaining_capacity left.");
-	$error = true;
+	if(!$admin_override){
+		array_push($errors,"There are not enough tickets remaining! You requested $ticket_quantity, but there ".(($remaining_capacity == 1)?"is":"are")." only $remaining_capacity left.");
+		$error = true;
+	}
+	/**********************************************/
+	/** Code to enable admin override             */
+	/**********************************************/
+	else{
+		array_push($warnings,'There are not enough tickets remaining! Admin override has permitted the request of ' . $ticket_quantity . ', but the event is now over-booked by . ' . ($ticket_quantity - $remaing_capacity) . ' tickets.');
+	}
+	/**********************************************/
+	/** End of Code to enable admin override      */
+	/**********************************************/
 }
 $use_account = false;
 $account_id = 0;
 $user_email = null;
+$send_email = true;
 if(isset($_POST['input_preferred_contact']) && $_POST['input_preferred_contact'] == "1"){
 	$user = new User();
 	if(!$user->is_logged_in()){
@@ -186,22 +242,46 @@ if(isset($_POST['input_preferred_contact']) && $_POST['input_preferred_contact']
 	}
 }
 else{
-	if(!isset($_POST['input_first_name']) || ($first_name = cut($_POST['input_first_name'],50)) == ""){
-		array_push($errors,"Please enter your first name.");
-		$error = true;
+	if(!$admin_override){
+		if(!isset($_POST['input_first_name']) || ($first_name = cut($_POST['input_first_name'],50)) == ""){
+			array_push($errors,"Please enter your first name.");
+			$error = true;
+		}
+		if(!isset($_POST['input_last_name']) || ($last_name = cut($_POST['input_last_name'],50)) == ""){
+			array_push($errors,"Please enter your last name.");
+			$error = true;
+		}
+		if(!isset($_POST['input_email_address']) || ($user_email = cut($_POST['input_email_address'],500)) == ""){
+			array_push($errors,"Please enter your email address.");
+			$error = true;
+		}
+		elseif(!validEmail($user_email)){
+			array_push($errors,"The email address provided is invalid!");
+			$error = true;
+		}
 	}
-	if(!isset($_POST['input_last_name']) || ($last_name = cut($_POST['input_last_name'],50)) == ""){
-		array_push($errors,"Please enter your last name.");
-		$error = true;
+	/**********************************************/
+	/** Code to enable admin override             */
+	/**********************************************/
+	else{
+		if(!isset($_POST['input_first_name']) || ($first_name = cut($_POST['input_first_name'],50)) == ""){
+			array_push($warnings,'No first name supplied.');
+		}
+		if(!isset($_POST['input_last_name']) || ($last_name = cut($_POST['input_last_name'],50)) == ""){
+			array_push($warnings,'No last name supplied.');
+		}
+		if(!isset($_POST['input_email_address']) || ($user_email = cut($_POST['input_email_address'],500)) == ""){
+			array_push($warnings,'No email address supplied.');
+			$send_email = false;
+		}
+		elseif(!validEmail($user_email)){
+			array_push($warnings,'The email address supplied is not valid.');
+			$send_email = false;
+		}
 	}
-	if(!isset($_POST['input_email_address']) || ($user_email = cut($_POST['input_email_address'],500)) == ""){
-		array_push($errors,"Please enter your email address.");
-		$error = true;
-	}
-	elseif(!validEmail($user_email)){
-		array_push($errors,"The email address provided is invalid!");
-		$error = true;
-	}
+	/**********************************************/
+	/** End of Code to enable admin override      */
+	/**********************************************/
 }
 
 $event_id = sanitize($event_id);
@@ -233,26 +313,53 @@ catch(PDOException $e){
 if($reservationCheck != null){
 	$row = $reservationCheck->fetch();
 	$quantity = $row['reserved'];
-	if(ENFORCE_ONE_RESERVATION){
-		if($quantity >= MAX_TICKET_RESERVATION){
-			array_push($errors,"You have already reached your maximum number of reservations for this event.");
-			$error = true;
+	
+	if(!$admin_override){
+		if(ENFORCE_ONE_RESERVATION){
+			if($quantity >= MAX_TICKET_RESERVATION){
+				array_push($errors,"You have already reached your maximum number of reservations for this event.");
+				$error = true;
+			}
+			elseif(($quantity + $ticket_quantity) > MAX_TICKET_RESERVATION){
+				array_push($errors,"Your request will cause you to exceed the maximum number of reservations for an event!");
+				$error = true;
+			}
 		}
-		elseif(($quantity + $ticket_quantity) > MAX_TICKET_RESERVATION){
-			array_push($errors,"Your request will cause you to exceed the maximum number of reservations for an event!");
-			$error = true;
+		else{
+			if($quantity >= RESERVATION_CEILING){
+				array_push($errors,"You have already reached your maximum number of reservations for this event.");
+				$error = true;
+			}
+			elseif(($quantity + $ticket_quantity) > RESERVATION_CEILING){
+				array_push($errors,"Your request will cause you to exceed the maximum number of reservations for an event!");
+				$error = true;
+			}
 		}
 	}
+	/**********************************************/
+	/** Code to enable admin override             */
+	/**********************************************/
 	else{
-		if($quantity >= RESERVATION_CEILING){
-			array_push($errors,"You have already reached your maximum number of reservations for this event.");
-			$error = true;
+		if(ENFORCE_ONE_RESERVATION){
+			if($quantity >= MAX_TICKET_RESERVATION){
+				array_push($warnings,'This user already reached his or her maximum number of reservations for this event.');
+			}
+			elseif(($quantity + $ticket_quantity) > MAX_TICKET_RESERVATION){
+				array_push($warnings,'This request will cause the user to exceed the maximum number of reservations for an event!');
+			}
 		}
-		elseif(($quantity + $ticket_quantity) > RESERVATION_CEILING){
-			array_push($errors,"Your request will cause you to exceed the maximum number of reservations for an event!");
-			$error = true;
+		else{
+			if($quantity >= RESERVATION_CEILING){
+				array_push($warnings,'This user already reached his or her maximum number of reservations for this event.');
+			}
+			elseif(($quantity + $ticket_quantity) > RESERVATION_CEILING){
+				array_push($warnings,'This request will cause the user to exceed the maximum number of reservations for an event!');
+			}
 		}
 	}
+	/**********************************************/
+	/** End of Code to enable admin override      */
+	/**********************************************/
 }
 
 if(!$error){
@@ -277,10 +384,12 @@ if(!$error){
 		$error = true;
 	}
 	if($reservationInsert != null){
-		$mail = sendConfirmationMail($user_email,ucwords($first_name . ' ' . $last_name),$ticket_quantity,$event_id);
-		if(!$mail){
-			array_push($errors,"Your reservation was successful, but we were unable to send the confirmation email!");
-			$error = true;
+		if($send_email){
+			$mail = sendConfirmationMail($user_email,ucwords($first_name . ' ' . $last_name),$ticket_quantity,$event_id);
+			if(!$mail){
+				array_push($errors,"Your reservation was successful, but we were unable to send the confirmation email!");
+				$error = true;
+			}
 		}
 		$success = true;
 	}

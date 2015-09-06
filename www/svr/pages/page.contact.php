@@ -101,60 +101,65 @@ class Page{
 				<ul id="boardList">
 					<li>
 						<a name="ad"></a>
-						<img src="/res/images/exec-board/debbie.png" />
-						<span class="name">Debbie Maciel</span>
+						<?php //<img src="/res/images/exec-board/debbie.png" /> ?>
+						<span class="name">Andrew Quimby</span>
 						<span class="position">Artistic Director</span>
 						<span class="email"><?php echo $this->str_rot('artisticdirector@floridaplayers.org',17); ?></span>
-						<p>Debbie Maciel is humbled by and thrilled to be the Artistic Director of Florida Players’s 2014-2015 season! A Dance BFA candidate she has grown up in the School of Theatre & Dance halls as a 3 year member of Florida Players, Dance in a Suitcase & as a student ambassador for the College of Fine Arts. You may have seen in her in various dance shows as well as the play Blood Wedding, musical Guys & Dolls, and FP’s very own Mulier Ridiculum. Debbie loves making art, rapping alongside her Signs of Life family, and a really smart pun. She wants you to join her for a fun and compelling season. Contact with: any questions regarding Florida Players and Master Classes.</p>
-					</li>
+						<?php 
+                        //<p>Debbie Maciel is humbled by and thrilled to be the Artistic Director of Florida Players’s 2014-2015 season! A Dance BFA candidate she has grown up in the School of Theatre & Dance halls as a 3 year member of Florida Players, Dance in a Suitcase & as a student ambassador for the College of Fine Arts. You may have seen in her in various dance shows as well as the play Blood Wedding, musical Guys & Dolls, and FP’s very own Mulier Ridiculum. Debbie loves making art, rapping alongside her Signs of Life family, and a really smart pun. She wants you to join her for a fun and compelling season. Contact with: any questions regarding Florida Players and Master Classes.</p>
+                        ?>
+                    </li>
 					<li>
 						<a name="aad"></a>
-						<img src="/res/images/exec-board/ashley.png" />
-						<span class="name">Ashley Vonada</span>
+						<?php //<img src="/res/images/exec-board/ashley.png" /> ?>
+						<span class="name">Kacey Musson</span>
 						<span class="position">Assistant Artistic Director</span>
 						<span class="email"><?php echo $this->str_rot('asst.artisticdirector@floridaplayers.org',17); ?></span>
-						<p>Ashley is a second year student studying theater and chemical engineering, and she was last seen in Antigone in the spring. She is both thrilled and honored to be on the Executive board as the assistant artistic director. If you have any questions, need help with anything (literally anything at all), or just want to talk theater or nerdy things, feel free to contact her!</p>
-					</li>
+						<?php
+                        //<p>Ashley is a second year student studying theater and chemical engineering, and she was last seen in Antigone in the spring. She is both thrilled and honored to be on the Executive board as the assistant artistic director. If you have any questions, need help with anything (literally anything at all), or just want to talk theater or nerdy things, feel free to contact her!</p>
+                        ?>
+                    </li>
 					<li>
 						<a name="pm"></a>
-						<img src="/res/images/exec-board/chaz.png" />
-						<span class="name">Chaz May</span>
+						<img src="/res/images/exec-board/lauren-kennedy.png" />
+						<span class="name">Lauren Kennedy</span>
 						<span class="position">Production Manager</span>
 						<span class="email"><?php echo $this->str_rot('productionmanager@floridaplayers.org',17); ?></span>
-						<p>Chaz May (BFA Musical Theatre) is honored to be the Florida Players Production Manager in his sophomore year at UF. This is Chaz's second year on the executive board of Florida Players. Chaz is in charge of the shows that are produced within Florida Players, so please contact him with any show-related concerns or if you want to get involved with things like: Tech Crews, Auditions, Design, Stage Management, House Management, Show Proposals, Etc.</p>
-					</li>
+						<p>Lauren Kennedy is elated to serve as Production Manager for Florida Players. This is her second year on the executive board and her third year at UF. Lauren is majoring in Tourism, Event, and Recreation Management, and yes, that IS a mouthful. In her spare time, Lauren bakes too much, attempts to learn to penny board inside her apartment, and hangs out in the SoTD hallway. Contact her if you have questions regarding stage management, design, tech crew, house management, show proposals, or getting involved in a production in any way.</p>
+                    </li>
 					<li>
 						<a name="tres"></a>
-						<img src="/res/images/exec-board/katina.png" />
-						<span class="name">Katina White</span>
+						<?php //<img src="/res/images/exec-board/katina.png" /> ?>
+						<span class="name">Melanie Sholl</span>
 						<span class="position">Treasurer</span>
 						<span class="email"><?php echo $this->str_rot('treasurer@floridaplayers.org',17); ?></span>
-						<p>Katina is enthralled to be your treasurer. Her first experience with the Florida Players was light board operator for Jeffrey. She enjoys kittens, long walks on the beach, managing the money, and creating SARs. Please contact her for any Florida Players financial concerns or if you are interested in joining the finance committee. </p>
-					</li>
+						<?php //<p>Katina is enthralled to be your treasurer. Her first experience with the Florida Players was light board operator for Jeffrey. She enjoys kittens, long walks on the beach, managing the money, and creating SARs. Please contact her for any Florida Players financial concerns or if you are interested in joining the finance committee. </p>
+                        ?>
+                    </li>
 					<li>
 						<a name="pub"></a>
-						<img src="/res/images/exec-board/veronica.png" />
-						<span class="name">Veronica Michelle</span>
+						<?php //<img src="/res/images/exec-board/veronica.png" /> ?>
+						<span class="name">Veronica Cinibulk</span>
 						<span class="position">Publicist</span>
 						<span class="email"><?php echo $this->str_rot('publicist@floridaplayers.org',17); ?></span>
-						<p>Veronica is very excited to serve as Publicist for Florida Players during her last year at UF. She is studying both theatre and advertising, and has been a member of Florida Players since her freshman year. Spreading the word about this wonderful organization and all the opportunities it offers is a task she will do with pride. Contact her if interested in joining the Publicity team.</p>
-					</li>
+						<p>Veronica Cinibulk is a third-year Psychology major and Spanish minor who fell in love with theatre a long, long time ago and still keeps coming back for more. In her free time she writes a lot, reads a lot, tries to learn new languages, and travels. Contact her with any questions regarding the publicity team, poster and program designs, other publicity questions, or just to talk!</p>
+                    </li>
 					<li>
 						<a name="ec"></a>
-						<img src="/res/images/exec-board/lauren.png" />
-						<span class="name">Lauren Elizabeth-Killer</span>
+						<img src="/res/images/exec-board/michael.png" />
+						<span class="name">Michael Ortiz</span>
 						<span class="position">Special Events Coordinator</span>
 						<span class="email"><?php echo $this->str_rot('specialevents@floridaplayers.org',17); ?></span>
-						<p>Lauren Killer is a third year English and Theatre major, with a minor in mass communications. Essentially, she's crazy. This is her second year serving on the Florida Players executive board, and her third year working with this mah-velous organization. When not acting on the Florida Players stage or working behind the scenes, she is trying to be Tina Fey, doing a downward dog, or crafting her little heart out. Check out her live and online comedy show “Just Kidding,” coming to an interwebs near you.</p>
-					</li>
+						<p>Michael Ortiz is a third year BFA Acting and Business Administration minor. This is his first year on the FP Executive Board. He has big plans for FP special events this year and can't wait to see his fellow players party their way through college together. Contact him if you have any questions/suggestions regarding special events!</p>
+                    </li>
 					<li>
 						<a name="sec"></a>
-						<img src="/res/images/exec-board/sam.png" />
-						<span class="name">Samantha Stone</span>
+						<img src="/res/images/exec-board/summer.png" />
+						<span class="name">Summer Pliskow</span>
 						<span class="position">Secretary</span>
 						<span class="email"><?php echo $this->str_rot('secretary@floridaplayers.org',17); ?></span>
-						<p>Sam is a sophomore Journalism/English double major and is beyond excited to be joining the Florida Players board! Sam loves acting, and you may have most recently seen her in the Florida Players production of Chatroom. In addition to theatre, she enjoys writing, reading, and generally goofing off. Contact her if you have any questions about points, becoming a member, or any other secretarial thing your heart desires.</p>
-					</li>
+						<p>Summer is a sophomore BFA Acting major and is beyond excited to be your secretary! She has loved being an active member and performer in Florida Players and cannot wait to bring that enthusiasm to the Executive Board. She will be sending you all the lovely emails about important dates, reminders and meeting info so be sure to look out for them! However, she also loves to get emails as well, so feel free to contact her with any questions you may have regarding the point system, meeting minutes, the FP bulletin board or if you wish to be on the Florida Players mailing list! </p>
+                    </li>
 					<li>
 						<a name="hist"></a>
 						<img src="/res/images/exec-board/mako.png" />
@@ -163,13 +168,21 @@ class Page{
 						<span class="email"><?php echo $this->str_rot('historian@floridaplayers.org',17); ?></span>
 						<p>Mako is a sophomore BA in theatre (she used to be a psych major, but then, she was like "nawwww, theatre"), and she is super excited to be the historian!! She loves Florida Players and theatre in general with a strong passion. She has previously acted in Florida Players' productions of Antigone and Mulier Ridiculam.</p>
 					</li>
+                    <li>
+                        <a name="outreach"></a>
+                        <img src="/res/images/exec-board/kelsa.png" />
+                        <span class="name">Kelsa Kuchera</span>
+                        <span class="position">Outreach Liaison</span>
+                        <span class="email"><?php echo $this->str_rot('outreach@floridaplayers.org',17); ?></span> 
+                        <p>Kelsa Kuchera is hyped to be the Florida Players' first Gator Growl, Homecoming and outreach Liaison!  A Sophomore at UF, Kelsa is double majoring in English and Theatre and minoring in the Theories and Politics of Sexuality.  In her vast amounts of free time she enjoys drawing, riding her bike, and watering her succulents.  Contact her if you are interested in skits, getting involved with homecoming, or just want to let the gator growl!</p>
+                    </li>
 					<li>
 						<a name="web"></a>
 						<img src="/res/images/exec-board/webmaster.png" />
 						<span class="name">Marcus Ball</span>
 						<span class="position">Webmaster</span> <!-- Grand Master of the Web -->
 						<span class="email"><?php echo $this->str_rot('webmaster@floridaplayers.org',17); ?></span>
-						<p>Marcus is a junior Computer Science major. He's been with Florida Players since his freshman year and is so happy to have the opportunity to work with such a great organization. Contact him if something has gone horribly wrong with the website or if you want to talk about geek stuff. </p>
+						<p>Marcus is a 5th Computer Science major. He's been with Florida Players since his freshman year and is so happy to have the opportunity to work with such a great organization. Contact him if something has gone horribly wrong with the website or if you want to talk about geek stuff. </p>
 						<!--
 						Wow. Such professional.
 						

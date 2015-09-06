@@ -73,7 +73,7 @@ class Page{
 				.nivoSlider {
 					position:relative;
 					background:url("/res/styles/nivo/themes/default/loading.gif") no-repeat 50% 50%;
-					height: 300px;
+					height: 333px;
 				}
 				.nivoSlider img {
 					position:absolute;
@@ -274,10 +274,7 @@ class Page{
 					<div id="slideshow-container">
 						<div class="slider-wrapper theme-default">
 							<div id="slider" class="nivoSlider">
-								<a href="http://floridaplayers.org/shows"><img src="/res/images/header/2014-fall-season.png" alt="Florida Players' Fall Season" /></a>
-								<a href="http://floridaplayers.org/show/ghosts"><img src="/res/images/header/2014-fall-ghosts.png" alt="Ghosts" /></a>
-								<a href="http://floridaplayers.org/show/boys-next-door"><img src="/res/images/header/2014-fall-boys-next-door.png" alt="Boys Next Door"/></a>
-								<a href="http://floridaplayers.org/show/nwf-f14"><img src="/res/images/header/2014-fall-new-works.png" alt="2014 New Works Festival"/></a>
+								<a href="http://floridaplayers.org/"><img src="/res/images/header/2015-fall-proposals.png" alt="Propose a show for our 2015 fall season!"/></a>
 							</div>
 						</div>
 						<div id="htmlcaption" class="nivo-html-caption">

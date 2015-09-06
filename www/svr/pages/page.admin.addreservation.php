@@ -1,12 +1,14 @@
 <?php
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE); //OH GOD I HATE MYSELF SO MUCH
 
+
+require_once "authentication.php";
 class Page{
 	var $request = null;
 	var $sql = null;
 	var $usr;
 	var $reservation_status = null;
 	var $reservation_details = array();
-	var $reservation_show_name = "";
 	function Page($request){
 		$this->request = $request;
 		//$this->usr = new User();
@@ -15,7 +17,7 @@ class Page{
 	
 	//Return string containing the page's title. 
 	function getTitle(){
-		echo "Tickets";
+		echo "Admin Reservation Creator";
 	}
 
 	//Page specific content for the <head> section.
@@ -68,7 +70,10 @@ class Page{
 				error = true; 
 			}
 			
-			var dataString = "input_selected_event="+escape(selected_event)+"&input_ticket_quantity="+escape(ticket_quantity);
+			/***********************************************************/
+			/** Adding ADMIN override code. ****************************/
+			/***********************************************************/
+			var dataString = "admin_override=true&input_selected_event="+escape(selected_event)+"&input_ticket_quantity="+escape(ticket_quantity);
 			
 			if($('#input_container_preferred_contact').length !== 0 && $('input[name=input_preferred_contact]:checked').length == 0){
 				$('#input_container_preferred_contact label').addClass("error");
@@ -80,23 +85,23 @@ class Page{
 			}
 			else{
 				var first_name = $("input#input_first_name").val();
-				if (first_name == "" || first_name == null) {
+				/*if (first_name == "" || first_name == null) {
 					$('#input_container_first_name input, #input_container_first_name label').addClass("error");
 					errors.push("Please enter your first name.");
 					error = true; 
-				}
+				}*/
 				
 				var last_name = $("input#input_last_name").val();
-				if (last_name == "" || last_name == null) {
+				/*if (last_name == "" || last_name == null) {
 					$('#input_container_last_name input, #input_container_last_name label').addClass("error");
 					errors.push("Please enter your last name.");
 					error = true; 
-				}
+				}*/
 				
 				var email_address = $("input#input_email_address").val();
 				AtPos = email_address.indexOf("@");
 				StopPos = email_address.lastIndexOf(".");
-				if (email_address == "" || email_address == null) {
+				/*if (email_address == "" || email_address == null) {
 					$('#input_container_email_address input, #input_container_email_address label').addClass("error");
 					errors.push("Please enter your email address.");
 					error = true; 
@@ -105,7 +110,7 @@ class Page{
 					$('#input_container_email_address input, #input_container_email_address label').addClass("error");
 					errors.push("Please enter a valid email address.");
 					error = true; 
-				}
+				}*/
 				dataString += "&input_first_name="+escape(first_name)+"&input_last_name="+escape(last_name)+"&input_email_address="+escape(email_address);
 			}
 			if(error){
@@ -126,17 +131,30 @@ class Page{
 			//alert(dataString);
 			$.ajax({
 				type: "POST",
-				url: "/tickets/submit?ajax_request",
+				url: "/admin/addreservation/submit?ajax_request",
 				data: dataString,
 				success: function(data, textStatus, jqXHR) {
 					var data_return = $.parseJSON(data);
+					$('#reservation_form input').removeAttr("disabled"); /* re-enable the form */
+					
 					if(data_return.status == "success"){
-						$("#reservation_message").html('<strong>Reservation successful!</strong><p>Thank you for reservation! You will receive a confirmation email with further information.</p><p>Let your friends know and make them jealous! <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://floridaplayers.org/tickets" data-text="I just reserved my tickets for #FloridaPlayers Presents '+data_return.show_name+'!" data-via="florida_players" data-hashtags="'+data_return.show_hashtag+'" data-size="large" data-count="none" data-dnt="true">Tweet</a><scr'+'ipt>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+\'://platform.twitter.com/widgets.js\';fjs.parentNode.insertBefore(js,fjs);}}(document, \'script\', \'twitter-wjs\');</scr'+'ipt>').show();
+						$("#reservation_message").html('<strong>Reservation successful!</strong><p>Thank you for reservation! You will receive a confirmation email with further information.</p><p>Let your friends know and make them jealous! <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://floridaplayers.org/tickets" data-text="I just reserved my tickets for #FloridaPlayers Presents Spring Awakening!" data-via="florida_players" data-hashtags="fpspringawakening" data-size="large" data-count="none" data-dnt="true">Tweet</a><scr'+'ipt>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+\'://platform.twitter.com/widgets.js\';fjs.parentNode.insertBefore(js,fjs);}}(document, \'script\', \'twitter-wjs\');</scr'+'ipt>').show();
 						$.scrollTo("#reservation_message");
 						clear_reservation_form();
-						$('#input_container_show_location').load("/tickets #input_container_show_location > *",function(){
+						$('#input_container_show_location').load("/admin/addreservation #input_container_show_location > *",function(){
 							$('#input_container_show_location .custom_radio_check').customInput();
 						});
+						
+						if(data_return.warnings != null){
+							$("#reservation_warnings").empty();
+							var mes = $("<p></p>").html("The server returned the following warnings!");
+							var list = $("<ul></ul>");
+							$.each(data_return.warnings,function(i,item){
+								li = $("<li></li>").html(item);
+								list.append(li);
+							});
+							$("#reservation_warnings").append(mes).append(list).show();
+						}
 						
 						if(data_return.errors != null){
 							$("#reservation_errors").empty();
@@ -148,11 +166,6 @@ class Page{
 							});
 							$("#reservation_errors").append(mes).append(list).show();
 						}
-						try{
-							clicky.log('/tickets/submit#success','Reservation success','pageview');
-						}
-						catch(e){ /* console.log("Could not log view to Clicky. Error: " + e); */ }
-						//$("#reservation_message").delay(5000).slideUp("slow");
 					}
 					else{
 						$("#reservation_errors").empty();
@@ -164,12 +177,20 @@ class Page{
 						});
 						$("#reservation_errors").append(mes).append(list).show();
 						$.scrollTo("#reservation_errors");
-						try{
-							clicky.log('/tickets/submit#error','Reservation error','pageview');
+						
+						if(data_return.warnings != null){
+							$("#reservation_warnings").empty();
+							var mes = $("<p></p>").html("The server returned the following warnings!");
+							var list = $("<ul></ul>");
+							$.each(data_return.warnings,function(i,item){
+								li = $("<li></li>").html(item);
+								list.append(li);
+							});
+							$("#reservation_warnings").append(mes).append(list).show();
 						}
-						catch(e){ /* console.log("Could not log view to Clicky. Error: " + e); */ }
+						
 					}
-					$('#reservation_form input').removeAttr("disabled"); /* re-enable the form */
+					
 					$('#loadingAnimatin').hide();
 				}
 			});
@@ -388,28 +409,37 @@ class Page{
 	 * If it returns false, the page will stop loading.
 	 **/
 	function preloadPage(){
+		$this->usr->get_info();
+		if(!$this->usr->is_logged_in() || $this->usr->get_user_info('permissions') == false || $this->usr->get_user_info('permissions') < 1){
+			header('Location: /home');
+			return false;
+		}
+	
 		if($this->has_flag(0,"submit")){
 			require "ticketprocess.php";
-			$this->reservation_show_name = $this->getShowNameFromEventId($_POST['input_selected_event']);
+			
 			if(isset($_GET['ajax_request'])){
 				$return = array();
 				if($success){
 					$return["status"] = "success";
 					if(count($errors) > 0){
 						$return['errors'] = $errors;
-					}		
+					}
+					if(count($warnings) > 0){
+						$return['warnings'] = $warnings;
+					}					
 				}
 				else{
 					$return["status"] = "error";
 					$return["errors"] = $errors;
+					$return['warnings'] = $warnings;
 				}
-				$return['show_name'] = $this->reservation_show_name;
-				$return['show_hashtag'] = $this->makeHashtag($this->reservation_show_name);
 				echo json_encode($return);
 				return false;
 			}
 			$this->reservation_status = $success;
 			$this->reservation_details = $errors;
+			$this->reservation_warnings = $warnings;
 		}
 		return true; 
 	}
@@ -448,8 +478,17 @@ class Page{
 					if($this->reservation_status == true){
 						/*echo '<div id="reservation_message" class="visible_override"><strong>Reservation successful!</strong><br />Thank you for reservation! You will receive a confirmation email with further information.</div>';
 						echo '<div id="reservation_errors" class="errors"></div>';*/
+						if(count($this->reservation_warnings) > 0){
+							echo '<div id="reservation_message"></div>';
+							echo '<div id="reservation_warnings" class="errors visible_override"><p>The server returned the following warnings!</p><ul>';
+							foreach($this->reservation_warnings as $warning){
+								echo "<li>{$warning}</li>";
+							}
+							echo '</ul></div>';
+						}
+						
 						echo '<div id="reservation_message" class="visible_override"><strong>Reservation successful!</strong><p>Thank you for reservation! You will receive a confirmation email with further information.</p>
-				<p>Let your friends know and make them jealous! <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://floridaplayers.org/tickets" data-text="I just reserved my tickets for #FloridaPlayers Presents '.$this->reservation_show_name.'!" data-via="florida_players" data-hashtags="'.$this->makeHashtag($this->reservation_show_name).'" data-size="large" data-count="none" data-dnt="true">Tweet</a>
+				<p>Let your friends know and make them jealous! <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://floridaplayers.org/tickets" data-text="I just reserved my tickets for #FloridaPlayers Presents Spring Awakening!" data-via="florida_players" data-hashtags="fpspringawakening" data-size="large" data-count="none" data-dnt="true">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+\'://platform.twitter.com/widgets.js\';fjs.parentNode.insertBefore(js,fjs);}}(document, \'script\', \'twitter-wjs\');</script></p></div>';
 						echo '<div id="reservation_errors" class="errors"></div>';
 					}
@@ -460,10 +499,20 @@ class Page{
 							echo "<li>{$error}</li>";
 						}
 						echo '</ul></div>';
+						
+						if(count($this->reservation_warnings) > 0){
+							echo '<div id="reservation_message"></div>';
+							echo '<div id="reservation_warnings" class="errors visible_override"><p>The server returned the following warnings!</p><ul>';
+							foreach($this->reservation_warnings as $warning){
+								echo "<li>{$warning}</li>";
+							}
+							echo '</ul></div>';
+						}
 					}
 				}
 				else{ ?>
 					<div id="reservation_errors" class="errors"></div>
+					<div id="reservation_warnings" class="errors"></div>
 					<div id="reservation_message"></div>
 				<?php }
 				$messages = ob_get_contents();
@@ -480,7 +529,8 @@ class Page{
 						$date = date( 'l, j F Y, \a\t g:i A',strtotime( $row['event_date'] ));
 						$remaining = $row['event_capacity'] - $row['tickets_sold'];
 						$is_closed = (strtotime( $row['ticket_close'] ) < time()) || ($row['closed'] == true);
-						$disabled = ($is_closed || $remaining <= 0)?"disabled=\"disabled\"":"";
+						//$disabled = ($is_closed || $remaining <= 0)?"disabled=\"disabled\"":"";
+						$disabled = ""; //Since this is the admin page, we won't disable the input.
 						
 						if(strtotime( $row['event_date'] ) <= time()) continue; //No need to display past shows
 						$no_shows = false;
@@ -492,15 +542,15 @@ class Page{
 						}
 						elseif(!$is_closed && $remaining <= 0){
 							$show_label = "<div class=\"ticket_label soldout\">SOLD OUT</div>";
-							$input_class .= " soldout";
+							//$input_class .= " soldout";
 						}
 						elseif($is_closed && $remaining > 0){
 							$show_label = "<div class=\"ticket_label closed remaining\">CLOSED &mdash; $remaining " . (($remaining == 1)?"ticket":"tickets") . " remaining</div>";
-							$input_class .= " closed";
+							//$input_class .= " closed";
 						}
 						elseif($is_closed && $remaining <= 0){
 							$show_label = "<div class=\"ticket_label soldout\">SOLD OUT</div>";
-							$input_class .= " soldout";
+							//$input_class .= " soldout";
 						}
 						
 						echo "<div class=\"radio_container\"><input class=\"$input_class\" name=\"input_selected_event\" id=\"$input_id\" value=\"$event_id\" type=\"radio\" $disabled /> <label for=\"$input_id\">$event_name &mdash; $date</label>$show_label</div>\n								";
@@ -514,10 +564,10 @@ class Page{
 				
 				
 				?>
-				<h1>Tickets</h1>
+				<h1>Insert New Reservation</h1>
 				<article>
 					<section>
-						
+						<div id="news_message">WARNING: This is the admin reservation page! Invalid requests will be permitted here.</div>
 						<?php if(time() < 1397768400 ){ ?>
 						<div id="news_message">We've added a few more tickets for <em>Florida Players Presents Spring Awakening</em>. Extra tickets for the Saturday and Sunday performances will be made available Thursday at 5:00pm.</div>
 						<?php } ?>
@@ -531,11 +581,7 @@ class Page{
 					echo $messages; 
 					if(!$no_shows){
 						?>
-						<form action="/tickets/submit" method="post" id="reservation_form">
-							<fieldset>
-								<legend>Notice</legend>
-								<p>More tickets for events may be released closer to the event date. If shows appear to be sold out, please check back later as more tickets may be added at a later date. </p>
-							</fieldset>
+						<form action="./submit" method="post" id="reservation_form">
 							<fieldset>
 								<legend>Reservation Details</legend>
 								<?php
@@ -583,12 +629,10 @@ class Page{
 									$this->text_input("Email address","email_address",true);
 								}?>
 							</fieldset>
-
-							<?php /*<fieldset>
+							<fieldset>
 								<legend>VIP Reservations</legend>
 								<p>Florida Players is now offering VIP reservations! For $3 for a single ticket, or $5 for two tickets, a VIP reservation will guarantee seating in the first three rows. To upgrade your tickets, complete your reservation, then email <span class="email"><?php echo $this->str_rot('reservations@floridaplayers.org?subject=VIP Reservation',17); ?></span> with your name and the email used for the reservation. </p>
-							</fieldset> */ ?>
-
+							</fieldset>
 							<input type="submit" value="Submit reservation" id="input_submit_reservation" />
 							<div id="loadingAnimatin" class="loading windows8">
 								<div class="wBall" id="wBall_1">
@@ -664,32 +708,6 @@ class Page{
 			}
 		}
 		return $s;
-	}
-	
-	function getShowNameFromEventId($eventId){
-		if(!isset($_POST['input_selected_event'])){ 
-			return false;
-		}
-		else $event_id = cut($eventId,11);
-		if(preg_match("/[^0-9]/",$event_id) && $event_id != ""){
-			return false;
-		}
-		
-		$sql = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD);
-		$sql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$statement = $sql->prepare('SELECT DISTINCT shows.show_name FROM shows INNER JOIN events ON events.show_id=shows.show_id WHERE events.event_id=:eid');
-		$statement->execute(array(':eid'=>$eventId));
-		if(($result = $statement->fetch(PDO::FETCH_ASSOC)) !== FALSE){
-			$show_name = $result['show_name'];
-			return $show_name;
-		}
-		return false;
-	}
-	
-	function makeHashtag($showName){
-		$name = str_replace(' ','',$showName);
-		$hashtag = strtolower('fp'.$name);
-		return $hashtag;
 	}
 }
 ?>
