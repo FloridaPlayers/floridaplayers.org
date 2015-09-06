@@ -95,7 +95,7 @@ class Page{
 	//Return nothing; print out the page. 
 	function getContent(){
 		?>
-		<h1>2013-2014 Executive Board</h1>
+		<h1>2015-2016 Executive Board</h1>
 		<article>
 			<section>
 				<ul id="boardList">
