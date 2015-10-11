@@ -140,7 +140,7 @@ class Page{
 			return false;
 		}
 		
-		$show_query = "SELECT shows.show_id, shows.show_name, shows.show_abbr, shows.show_term, shows.show_year, shows.byline, shows.location, shows.image, shows.director, shows.synopsis, shows.fine_print, shows.promo, e.open, e.close FROM shows LEFT JOIN (SELECT show_id, MAX(event_date) AS close, MIN(event_date) AS open FROM events WHERE active='1' GROUP BY show_id) AS e ON shows.show_id = e.show_id WHERE shows.show_abbr='$requested_show' LIMIT 1";
+		$show_query = "SELECT shows.show_id, shows.show_name, shows.show_abbr, shows.show_term, shows.show_year, shows.byline, shows.location, shows.image, shows.director, shows.synopsis, shows.fine_print, shows.promo, e.open, e.close, e.active FROM shows LEFT JOIN (SELECT show_id, MAX(event_date) AS close, MIN(event_date) AS open, active FROM events GROUP BY show_id) AS e ON shows.show_id = e.show_id WHERE shows.show_abbr='$requested_show' LIMIT 1";
 		try{
 			$show_response = $this->sql->query($show_query);
 			if($show_response->rowCount() === 1){
@@ -220,7 +220,10 @@ class Page{
 					$data = $THEATER_LOCATIONS[$this->show_data['location']];
 					echo "Presented at the <a href=\"/map/{$data['short']}\">{$data['name']}</a>";
 				}
-				if(strtotime($this->show_data['close']) > time()){
+                //If the show is both active (tickets are open), 
+                //  and the show hasn't already passed,
+                //  then we can show a link to reserve tickets.
+				if($this->show_data['active'] == true && strtotime($this->show_data['close']) > time()){
 					echo "<a href=\"/tickets\" class=\"showTicketLink\">Reserve tickets</a>";
 				}
 			?></section>

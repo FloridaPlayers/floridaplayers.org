@@ -259,7 +259,7 @@ div#body > aside.small ~ article{
 	float: left;
 }
 *:not(.textslide) > h1{
-	background: url("/res/images/layout/header-bg2.png") no-repeat scroll left bottom transparent;
+	background: url("/res/images/layout/header-bg.png") no-repeat scroll left bottom transparent;
 	color: #FFFFFF !important;
 	font-family: QuicksandBook !important;
 	font-size: 36px !important;
