@@ -115,9 +115,7 @@ class Page{
 						<span class="name">Kacey Musson</span>
 						<span class="position">Assistant Artistic Director</span>
 						<span class="email"><?php echo $this->str_rot('asst.artisticdirector@floridaplayers.org',17); ?></span>
-						<?php
-                        //<p>Ashley is a second year student studying theater and chemical engineering, and she was last seen in Antigone in the spring. She is both thrilled and honored to be on the Executive board as the assistant artistic director. If you have any questions, need help with anything (literally anything at all), or just want to talk theater or nerdy things, feel free to contact her!</p>
-                        ?>
+                        <p>Kacey is a Junior BFA Acting Major, and outside studies of Film and Media. Questions and information regarding Mentor-Mentee, conflicts, workshops, general production and audition info, and any other questions you may have can be reverted to her! She's in the theater hallway all the time, and welcomes e-mails, calls, and texts.</p>
                     </li>
 					<li>
 						<a name="pm"></a>
