@@ -125,12 +125,11 @@ class Page{
                     </li>
 					<li>
 						<a name="tres"></a>
-						<?php //<img src="/res/images/exec-board/katina.png" /> ?>
+						<img src="/res/images/exec-board/melanie.png" />
 						<span class="name info-item">Melanie Sholl</span>
 						<span class="position info-item">Treasurer</span>
 						<span class="email info-item"><?php echo $this->str_rot('treasurer@floridaplayers.org',17); ?></span>
-						<?php //<p>Katina is enthralled to be your treasurer. Her first experience with the Florida Players was light board operator for Jeffrey. She enjoys kittens, long walks on the beach, managing the money, and creating SARs. Please contact her for any Florida Players financial concerns or if you are interested in joining the finance committee. </p>
-                        ?>
+						<p>Melanie is a sophomore BFA Acting student and Arts in Healthcare Certificate candidate.  She is so excited to be serving on the executive board for such a wonderful organization!  Please contact with any questions regarding the Florida Players budget or if you have a good pun you'd like to share. She treasures you!</p>
                     </li>
 					<li>
 						<a name="pub"></a>
