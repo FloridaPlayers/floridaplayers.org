@@ -1,0 +1,9 @@
+AurulentSansRegular
+CantarellRegular
+CartoGothicStdBook
+ColaborateThinRegular, ColaborateLightRegular, ColaborateRegular
+NeoRetroDrawRegular, NeoRetroFillRegular, NeoRetroShadowRegular
+Nobile
+OpenSansRegular, OpenSansLight
+QuicksandLight, QuicksandBook
+WalkwaySemiBoldRegular, WalkwayBlackRegular

@@ -274,11 +274,10 @@ class Page{
 					<div id="slideshow-container">
 						<div class="slider-wrapper theme-default">
 							<div id="slider" class="nivoSlider">
-								<a href="https://www.facebook.com/FloridaPlayers"><img src="/res/images/header/2015-fall-ball.png" alt="Join us at the Hipp for our Fall Ball on 22 October!"/></a>
+                                <a href="/show/tgfa"><img src="/res/images/header/2015-fall-thank-god-for-aids.png" alt="Thank God For AIDS: December 4-6" /></a>
                                 <a href="/shows"><img src="/res/images/header/2015-fall-season.png" /></a>
                                 <a href="/show/shakespeare"><img src="/res/images/header/2015-fall-shakespeare.png" alt="The Complete Works of William Shakespeare [Abridged][Revised]: October 30-November 1" /></a>
                                 <a href="/show/pillowman"><img src="/res/images/header/2015-fall-pillowman.png" alt="The Pillowman: November 20-22" /></a>
-                                <a href="/show/tgfa"><img src="/res/images/header/2015-fall-thank-god-for-aids.png" alt="Thank God For AIDS: December 4-6" /></a>
                             </div>
 						</div>
 						<div id="htmlcaption" class="nivo-html-caption">
